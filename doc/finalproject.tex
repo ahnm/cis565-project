@@ -1,0 +1,61 @@
+\documentclass[english]{article}
+
+%% Packages pull in extra commands:
+%% http://en.wikibooks.org/wiki/LaTeX/Packages
+\usepackage[T2A,OT1]{fontenc}
+\usepackage[ot2enc,latin9]{inputenc}
+%\usepackage[ot2enc]{inputenc}
+%\usepackage[latin9]{inputenc}
+\usepackage[russian,american]{babel}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{trsym}
+
+\usepackage[numbers]{natbib}
+
+% New commands serve as shorthand for frequently used command combinations.
+\newcommand{\ind}[1]{\mathbf{1}\left(#1\right)}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\E}{\mathbf{E}}
+
+\title{CIS 565, GPU Programming, Spring 2012: Final Project Proposal \\ GPU Accelerated Satellite Orbits and Closest Approach}
+\author{Matthew Ahn}
+
+\begin{document}
+\maketitle
+\section*{Description}
+There is a need to GPU accelerate the propagation of orbits of a multitude of satellites and predict closest approach between two satellites. On February 10, 2009, two satellites collided in outer space 490 miles above the Taymyr Peninsula in Siberia. This marked the first accidental collision between two artificial satellites in space\cite{satellitecollision2009}. It has been estimated that the collision created over 1,000 pieces of debris larger than 4 inches\cite{satellitecollision2009}. This creates a monolithic computational task to propagate the orbits of each satellite and to calculate the euclidean distances between two satellites at every time step. 
+
+\section*{Proposal}
+Orbit propagation of satellites and closest approach between two satellites is massively parallel. I propose GPU accelerating the propagation of orbits and calculation of closest approach to leverage the parallelism of orbit propagation. Satellites will be propagated from Two Line Elements with CUDA and their respective trajectories will be animated and rendered using WebGL.
+
+\section*{Goals}
+\begin{enumerate}
+\item Develop algorithm to propagate satellite in orbit and calculate closest approach.
+\begin{enumerate}
+\item Add J2 term to include perturbations of accelerations due to equatorial bulge.
+\end{enumerate}
+\item Develop code for CPU Architecture.
+\begin{enumerate}
+\item Test software with Two Line Elements from www.space-track.org TLE database.
+\end{enumerate}
+\item Develop code for CUDA.
+\begin{enumerate}
+\item Test software with Two Line Elements from www.space-track.org TLE database.
+\end{enumerate}
+\item Develop code to render orbits.
+
+\end{enumerate}
+
+
+
+
+    \bibliographystyle{plainnat}
+    \bibliography{finalproject}
+\end{document}
