@@ -24,23 +24,20 @@
 \newcommand{\bx}{\mathbf{x}}
 \newcommand{\E}{\mathbf{E}}
 
-\title{CIS 565, GPU Programming, Spring 2012: Final Project Proposal \\ GPU Accelerated Satellite Orbits and Closest Approach}
+\title{CIS 565, GPU Programming, Spring 2012: Final Project Proposal \\ GPU Accelerated Simplified General Perturbation No. 4 (SGP4) Model}
 \author{Matthew Ahn}
 
 \begin{document}
 \maketitle
 \section*{Description}
-There is a need to GPU accelerate the propagation of orbits of a multitude of satellites and predict closest approach between two satellites. On February 10, 2009, two satellites collided in outer space 490 miles above the Taymyr Peninsula in Siberia. This marked the first accidental collision between two artificial satellites in space\cite{satellitecollision2009}. It has been estimated that the collision created over 1,000 pieces of debris larger than 4 inches\cite{satellitecollision2009}. This creates a monolithic computational task to propagate the orbits of each satellite and to calculate the euclidean distances between two satellites at every time step. 
+There is a need to track every orbiting object in space. However, it is infeasible to actively track all artificial satellite continuously which motivated the effort to create orbit propagation models. In theory, given an observation and measurement of an ephemeris of a single orbiting object, the orbit propagation models should extrapolate ephemeris vectors accurately to any given point in time. In 1969, the Simplified General Perturbations No. 4 model (SGP4) was developed to calculate the ephemeris vectors of orbiting satellites. The models were able to predict the degree of perturbation on the orbiting due to gravitational effects of large orbiting bodies (Sun and Moon), Earth's oblong body, atmospheric drag, and radiation. \cite{SGP4}
 
 \section*{Proposal}
-Orbit propagation of satellites and closest approach between two satellites is massively parallel. I propose GPU accelerating the propagation of orbits and calculation of closest approach to leverage the parallelism of orbit propagation. Satellites will be propagated from Two Line Elements with CUDA and their respective trajectories will be animated and rendered using WebGL.
+The orbit propagation of an orbiting body is massively parallel. I propose GPU accelerating the propagation of orbits to leverage the parallelism of orbit propagation. Satellites will be propagated from Two Line Elements with CUDA and their respective trajectories will be animated and rendered using OpenGL.
 
 \section*{Goals}
 \begin{enumerate}
-\item Develop algorithm to propagate satellite in orbit and calculate closest approach.
-\begin{enumerate}
-\item Add J2 term to include perturbations of accelerations due to equatorial bulge.
-\end{enumerate}
+\item Understand the SGP4 algorithm and parallelize SPG4 to the GPU Architecture.
 \item Develop code for CPU Architecture.
 \begin{enumerate}
 \item Test software with Two Line Elements from www.space-track.org TLE database.
