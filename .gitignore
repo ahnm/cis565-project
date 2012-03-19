@@ -4,3 +4,14 @@
 *.log
 *.synctex.gz
 *.dvi
+*.exe
+*.ilk
+*.pdb
+*.ipch
+*.sdf
+*.suo
+*.tlog
+*.obj
+*.exe.*
+*.lastbuildstate
+*.idb
