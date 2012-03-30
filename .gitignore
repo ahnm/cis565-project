@@ -25,3 +25,15 @@
 src/SGP4/SGP4/catalog_3l_2012_03_26_am.txt
 *.unsuccessfulbuild
 *.cache
+
+/bin
+/common/obj
+/common/bin
+/common/lib
+/shared/bin
+/shared/ipch
+/shared/lib
+/shared/obj
+/src/SGP4/sgp4_test
+/src/SGP4/ipch
+/src/SGP4/SGP4/x64
