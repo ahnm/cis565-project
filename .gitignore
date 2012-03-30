@@ -15,3 +15,12 @@
 *.exe.*
 *.lastbuildstate
 *.idb
+*.dll
+*.exp
+*.lib
+*.dll.embed.manifest
+*.dll.embed.manifest.res
+*.dll.intermediate.manifest
+*.rc
+src/SGP4/SGP4/catalog_3l_2012_03_26_am.txt
+*.unsuccessfulbuild
