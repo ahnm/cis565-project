@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef TLE_H
 #define TLE_H
 

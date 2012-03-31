@@ -55,8 +55,8 @@ void twolineelement2rv(std::ifstream &tle_read, std::vector<satelliterecord_t> &
 			/* End */
 
 			SatRec[SatRec.size()-1].n_dt = StringToNumber<double>(mean_motion_dt_str) / (xpdotp * 1440.0);
-			SatRec[SatRec.size()-1].n_ddt = StringExpToNumber<double>(mean_motion_ddt_str) / (xpdotp * 1440.0 * 1440.0);
-			SatRec[SatRec.size()-1].bstar = StringExpToNumber<double>(bstar_str);
+			SatRec[SatRec.size()-1].n_ddt = StringExpToNumber<double>(mean_motion_ddt_str.insert(0,".")) / (xpdotp * 1440.0 * 1440.0);
+			SatRec[SatRec.size()-1].bstar = StringExpToNumber<double>(bstar_str.insert(0,"."));
 
 
 		}else if(line_num.compare("2") == 0){
@@ -80,13 +80,13 @@ void twolineelement2rv(std::ifstream &tle_read, std::vector<satelliterecord_t> &
 				continue;
 			}
 			
-			SatRec[SatRec.size()-1].a		=	pow( SatRec[SatRec.size()-1].n * tumin, (-2.0/3.0) );
-			SatRec[SatRec.size()-1].e		=	StringToNumber<double>(eccentricity_str);
+			SatRec[SatRec.size()-1].e		=	StringToNumber<double>(eccentricity_str.insert(0,"."));
 			SatRec[SatRec.size()-1].i		=	deg2rad<double>(StringToNumber<double>(inclination_str));
 			SatRec[SatRec.size()-1].raan	=	deg2rad<double>(StringToNumber<double>(raan_str));
 			SatRec[SatRec.size()-1].w		=	deg2rad<double>(StringToNumber<double>(argument_of_perigee_str));
 			SatRec[SatRec.size()-1].M		=	deg2rad<double>(StringToNumber<double>(mean_anomaly_str));
 			SatRec[SatRec.size()-1].n		=	StringToNumber<double>(mean_motion_str) / xpdotp;
+			SatRec[SatRec.size()-1].a		=	pow( SatRec[SatRec.size()-1].n * tumin, (-2.0/3.0) );
 		}
 	}
 }

@@ -95,11 +95,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../../common/inc;../../../shared/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cuda.lib;cudart.lib;msvcrtd.lib;cutil64D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>cudart.lib;cutil64D.lib;shrUtils64D.lib;kernel32.lib;LIBCMTD.LIB;LIBCPMTD.LIB</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <AdditionalLibraryDirectories>../../../common/lib/$(Platform);../../../shared/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CudaCompile>
@@ -107,7 +109,7 @@
       <Runtime>MTd</Runtime>
       <Warning>W4</Warning>
       <Defines>%(Defines)</Defines>
-      <Include>./;../../common/inc;../../shared/inc;%(Include)</Include>
+      <Include>./;../../../common/inc;../../../shared/inc;%(Include)</Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="constants.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp">
       <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">64</TargetMachinePlatform>
@@ -154,6 +157,14 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="sgp4CUDA.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\cutil_vs2010.vcxproj">
+      <Project>{46fb0b73-5a53-444a-8e72-f4f0a373098c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\shared\shrUtils_vs2010.vcxproj">
+      <Project>{f9750d72-d315-4f81-af1b-10938220ffb3}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

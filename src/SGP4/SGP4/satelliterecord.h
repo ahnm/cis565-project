@@ -1,8 +1,8 @@
-#pragma once
-
 #ifndef SATELLITE_RECORD
 #define SATELLITE_RECORD
 
+#include "common.h"
+#include <thrust\host_vector.h>
 #include <thrust\device_vector.h>
 
 struct satelliterecord_t{
@@ -38,22 +38,13 @@ struct SatelliteRecordArray
 };
 
 
-SatelliteRecordArray convertToKernel( thrust::host_vector< satelliterecord_t >& hVec )
-{
-    SatelliteRecordArray SRArray;
-    SRArray._array = thrust::raw_pointer_cast( &hVec[0] );
-    SRArray._size  = ( int ) hVec.size();
-
-    return SRArray;
-};
-
-SatelliteRecordArray convertToKernel( thrust::device_vector< satelliterecord_t >& dVec )
-{
-    SatelliteRecordArray SRArray;
-    SRArray._array = thrust::raw_pointer_cast( &dVec[0] );
-    SRArray._size  = ( int ) dVec.size();
-
-    return SRArray;
-};
+//SatelliteRecordArray convertToKernel( thrust::device_vector< satelliterecord_t >& dVec )
+//{
+//    SatelliteRecordArray SRArray;
+//    SRArray._array = thrust::raw_pointer_cast( &dVec[0] );
+//    SRArray._size  = ( int ) dVec.size();
+//
+//    return SRArray;
+//};
 
 #endif

@@ -21,7 +21,7 @@ T StringToNumber ( const std::string &Text )
 template <typename T>
 T StringExpToNumber ( const std::string &Text )
 {
-	std::string coeff_str = Text.substr(0,Text.length() - 2).insert(0,".");
+	std::string coeff_str = Text.substr(0,Text.length() - 2);
 	std::string exp_str = Text.substr(Text.length() - 2,2);
 	std::stringstream ss;
 	ss << coeff_str << exp_str;

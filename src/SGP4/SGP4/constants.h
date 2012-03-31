@@ -1,10 +1,27 @@
-#pragma once
-
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
 #include "common.h"
 
+typedef enum
+{
+  wgs72old,
+  wgs72,
+  wgs84
+} gravconsttype;
+
+struct gravconstant_t{
+	double	mu,
+			radiusearthkm,
+			xke,
+			tumin,
+			j2,
+			j3,
+			j4,
+			j3oj2;
+};
+
+void setGravConstant(gravconsttype whichconst, gravconstant_t &gravconst);
 
 const double PI				=	std::atan(1.0) * 4.0;
 
@@ -18,5 +35,6 @@ const double j2				=	0.00108262998905;
 const double j3				=	-0.00000253215306;
 const double j4				=	-0.00000161098761;
 const double j3oj2			=	j3 / j2;
+
 
 #endif

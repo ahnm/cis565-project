@@ -25,12 +25,13 @@
 // Common includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <memory.h>
-#include <math.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <time.h>
+//#include <memory.h>
 
+
+#include <math.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -41,6 +42,11 @@
 #include <shrQATest.h>
 #include <cutil_inline.h>
 
+#include "constants.h"
+#include "satelliterecord.h"
+#include <thrust\host_vector.h>
+
+#include <thrust\device_vector.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Common constants

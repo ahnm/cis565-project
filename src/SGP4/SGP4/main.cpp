@@ -9,14 +9,43 @@ const std::string tle = "1 00005U 58002B   00179.78495062  .00000023  00000-0  2
 1 29238U 06022G   06177.28732010  .00766286  10823-4  13334-2 0   101\n\
 2 29238  51.5595 213.7903 0202579  95.2503 267.9010 15.73823839  1061      0.0      1440.0        120.00\n";
 
+#define HANDLE_ERROR(error) (handle_error(error, __FILE__, __LINE__ ))
+
+#include <cuda.h>
+#include <cuda_runtime.h>
+#include <thrust/version.h>
+
+#include "tle.h"
+#include "sgp4CUDA.h"
+
+
+static void handle_error(cudaError_t error, const char *file, int line ) {
+    if (error != cudaSuccess) {
+    	std::cout <<  file << ", line " << line << ": " << cudaGetErrorString(error) << "\n";
+        exit(EXIT_FAILURE);
+    }
+}
+
 
 int main(int argc, char **argv){
 	shrQAStart(argc, argv);
+	cutilChooseCudaDevice(argc, argv);
 	
-    cutilChooseCudaDevice(argc, argv);
-	
+	cudaDeviceProp prop;
+	int thrust_major_version = THRUST_MAJOR_VERSION;
+	int thrust_minor_version = THRUST_MINOR_VERSION;
+
+	HANDLE_ERROR( cudaGetDeviceProperties( &prop, 0) );
+
 	std::ifstream tle_file("catalog_3l_2012_03_26_am.txt");
 
+	std::vector<satelliterecord_t> SatRec;
+	twolineelement2rv(tle_file, SatRec);
+
+	gravconsttype whichconst;
+
+
+	ComputeSGP4CUDA(gravconsttype::wgs84, SatRec, 0, 0, 0);
     // report self-test status
     shrQAFinish(argc, const_cast<const char **>(argv), true ? QA_PASSED : QA_FAILED);
 	return 0;
