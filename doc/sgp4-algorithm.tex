@@ -1,0 +1,87 @@
+\documentclass[english]{article}
+
+% \usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{latexsym}
+\usepackage{xspace}
+\usepackage{pdflscape}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks]{hyperref}
+\usepackage{enumerate}
+\usepackage{ifthen}
+\usepackage{float}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usepackage{algorithm2e}
+
+% HW/exam points
+\newcommand{\hpoints}[1]{
+  \textbf{[#1 points]}
+}
+\newcommand{\points}[1]{
+  \textbf{[#1 
+    \ifthenelse{\equal{#1}{1}}
+    {point}{points}]}
+}
+\newcommand{\point}{\textbf{[1 point]}}
+
+% CIS580 packages
+\usepackage{subfigure}
+\usepackage{rotating}
+\usepackage{verbatim}
+\usepackage{graphicx}
+% CIS580 notations
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\ra}{\rightarrow}
+\newcommand{\rect}{\text{rect}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\w}{\omega}
+\newcommand{\s}{\sigma}
+\newcommand{\intinf}{\int_{-\infty}^{\infty}}
+\newcommand{\suminf}{\sum_{n=-\infty}^{\infty}}
+\newcommand{\fmap}{\multimapdotbothA}
+\newcommand{\fmapvert}{\multimapdotbothAvert}
+
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tr}{\text{tr }}
+
+% Vectors and matrices
+\newcommand{\mat}[2]{
+  \left[\begin{array}{#1} #2\end{array}\right]
+}
+
+% Derivatives
+\newcommand{\deriv}[3]{
+  \ifthenelse{\equal{#3}{1}}
+    {\frac{\displaystyle d {#1}}{\displaystyle d {#2}}}{\frac{\displaystyle d^{#3} {#1}}{\displaystyle d {#2}^{#3}}}}
+
+\newcommand{\pderiv}[3]{
+  \ifthenelse{\equal{#3}{1}}
+    {\frac{\displaystyle\partial {#1}}{\displaystyle\partial {#2}}}{\frac{\displaystyle\partial^{#3} {#1}}{\displaystyle\partial {#2}^{#3}}}
+  }
+
+% Big parentheses
+\newcommand{\lp}{\left}
+\newcommand{\rp}{\right}
+
+
+\title{CIS 580, Machine Perception, Spring 2012: Midterm\\
+24-hour take-home exam}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\end{document}
