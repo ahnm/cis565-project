@@ -38,3 +38,5 @@ src/SGP4/SGP4/catalog_3l_2012_03_26_am.txt
 /src/SGP4/ipch
 /src/SGP4/SGP4/x64
 *.opensdf
+
+/src/SGP4/Debug
