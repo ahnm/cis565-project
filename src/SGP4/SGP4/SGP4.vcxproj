@@ -156,7 +156,12 @@
     <ClInclude Include="tle.h" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="sgp4CUDA.cu" />
+    <CudaCompile Include="sgp4CUDA.cu">
+      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">sgp4initKernel.cu;%(AdditionalDeps)</AdditionalDeps>
+    </CudaCompile>
+    <CudaCompile Include="sgp4initKernel.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\common\cutil_vs2010.vcxproj">

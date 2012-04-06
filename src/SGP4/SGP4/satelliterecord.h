@@ -37,7 +37,7 @@ struct SatelliteRecordArray
     int _size;
 };
 
-
+//
 //SatelliteRecordArray convertToKernel( thrust::device_vector< satelliterecord_t >& dVec )
 //{
 //    SatelliteRecordArray SRArray;

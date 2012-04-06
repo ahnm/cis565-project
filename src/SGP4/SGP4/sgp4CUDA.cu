@@ -9,6 +9,8 @@
 #include <thrust\device_vector.h>
 #include <thrust\sort.h>
 
+#include "sgp4initKernel.cu"
+
 struct SRCmpOrbitalPeriod {
   __host__ __device__
   bool operator()(const satelliterecord_t& sr1, const satelliterecord_t& sr2) {
@@ -29,5 +31,6 @@ void ComputeSGP4CUDA(	gravconsttype whichconst, std::vector<satelliterecord_t> &
 
 	thrust::device_vector<satelliterecord_t> d_vector = h_vector;
 	thrust::sort(d_vector.begin(), d_vector.end(), SRCmpOrbitalPeriod());
-
+	
+    struct satelliterecord_t* _array = thrust::raw_pointer_cast( &d_vector[0] );
 }

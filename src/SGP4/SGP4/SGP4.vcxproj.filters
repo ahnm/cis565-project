@@ -38,6 +38,9 @@
     <CudaCompile Include="sgp4CUDA.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
+    <CudaCompile Include="sgp4initKernel.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
