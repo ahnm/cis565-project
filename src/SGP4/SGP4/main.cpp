@@ -37,15 +37,16 @@ int main(int argc, char **argv){
 
 	HANDLE_ERROR( cudaGetDeviceProperties( &prop, 0) );
 
-	std::ifstream tle_file("catalog_3l_2012_03_26_am.txt");
+	std::ifstream tle_file("D:\\School\\cis565\\cis565-project\\src\\SGP4\\SGP4\\catalog_3l_2012_03_26_am.txt");
 
-	std::vector<satelliterecord_t> SatRec;
+	std::vector<satelliterecord_aos_t> SatRec;
 	twolineelement2rv(tle_file, SatRec);
 
 	gravconsttype whichconst;
 
 
 	ComputeSGP4CUDA(gravconsttype::wgs84, SatRec, 0, 0, 0);
+
     // report self-test status
     shrQAFinish(argc, const_cast<const char **>(argv), true ? QA_PASSED : QA_FAILED);
 	return 0;

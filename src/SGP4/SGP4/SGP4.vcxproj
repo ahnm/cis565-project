@@ -110,6 +110,8 @@
       <Warning>W4</Warning>
       <Defines>%(Defines)</Defines>
       <Include>./;../../../common/inc;../../../shared/inc;%(Include)</Include>
+      <CodeGeneration>compute_20,sm_20</CodeGeneration>
+      <GPUDebugInfo>true</GPUDebugInfo>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -156,11 +158,23 @@
     <ClInclude Include="tle.h" />
   </ItemGroup>
   <ItemGroup>
+    <CudaCompile Include="commonCUDA.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
+    <CudaCompile Include="functionsKernel.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
     <CudaCompile Include="sgp4CUDA.cu">
-      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">sgp4initKernel.cu;%(AdditionalDeps)</AdditionalDeps>
+      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">commonCUDA.cu;sgp4initKernel.cu;spg4Kernel.cu;%(AdditionalDeps)</AdditionalDeps>
+      <CodeGeneration Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">compute_20,sm_20</CodeGeneration>
     </CudaCompile>
     <CudaCompile Include="sgp4initKernel.cu">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">commonCUDA.cu;functionsKernel.cu</AdditionalDeps>
+    </CudaCompile>
+    <CudaCompile Include="sgp4Kernel.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">commonCUDA.cu;functionsKernel.cu</AdditionalDeps>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +184,12 @@
     <ProjectReference Include="..\..\..\shared\shrUtils_vs2010.vcxproj">
       <Project>{f9750d72-d315-4f81-af1b-10938220ffb3}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="satelliterecordCUDA.cuh">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

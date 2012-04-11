@@ -108,3 +108,5 @@ void jday(int year, int mon, int day, int hr, int minute, double sec, double& jd
 		((sec / 60.0 + minute) / 60.0 + hr) / 24.0;  // ut in days
 	// - 0.5*sgn(100.0*year + mon - 190002.5) + 0.5;
 }  // end jday
+
+

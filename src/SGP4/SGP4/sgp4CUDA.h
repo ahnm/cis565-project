@@ -6,7 +6,7 @@
 #define SGP4_CUDA_H
 
 void ComputeSGP4CUDA(	gravconsttype whichconst,	
-						std::vector<satelliterecord_t> &SatRec,
+						std::vector<satelliterecord_aos_t> &SatRec,
 						double starttime,
 						double endtime,
 						double deltatime	);

@@ -41,6 +41,18 @@
     <CudaCompile Include="sgp4initKernel.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
+    <CudaCompile Include="satelliterecordCUDA.cuh">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="sgp4Kernel.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="commonCUDA.cuh">
+      <Filter>Header Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="functionsKernel.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
