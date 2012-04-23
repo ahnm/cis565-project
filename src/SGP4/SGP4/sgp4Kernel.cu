@@ -25,24 +25,21 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 	//int tid = block_start_idx + ((threadIdx.x + OFFSET) % STRIDE);
 	int tid = block_start_idx + threadIdx.x;
 	if(tid < N){
-		double am   , axnl  , aynl , betal ,  cosim , cnod  ,
-			cos2u, coseo1, cosi , cosip ,  cosisq, cossu , cosu,
-			delm , delomg, em   , emsq  ,  ecose , el2   , eo1 ,
-			ep   , esine , argpm, argpp ,  argpdf, pl,     mrt = 0.0,
-			/*mvt  ,*/ /*rdotl ,*/ rl   , /*rvdot ,*/  /*rvdotl,*/ sinim ,
-			sin2u, sineo1, sini , sinip ,  sinsu , sinu  ,
-			snod , su    , t2   , t3    ,  t4    , tem5  , temp,
-			temp1, temp2 , tempa, tempe ,  templ , u     , ux  ,
-			uy   , uz    , /*vx   , vy    ,  vz    ,*/ inclm , mm  ,
-			nm   , nodem, xinc , xincp ,  xl    , xlm   , mp  ,
-			xmdf , xmx   , xmy  , nodedf, xnode , nodep, tc  , dndt,
-			twopi, x2o3  /*, vkmpersec*/;
+		double	am		,	axnl	,	aynl	,	betal	,	cos2u	,	coseo1	,	cosip	,
+				cosisq	,	delm	,	delomg	,	em		,	emsq	,	ecose	,	el2		,
+				eo1		,	ep		,	esine	,	argpm	,	argpp	,	argpdf	,	pl		,
+				mrt		,	rl		,	sin2u	,	sineo1	,	sinip	,	su		,	t2		,
+				t3		,	t4		,	tem5	,	temp	,	temp1	,	temp2	,	tempa	,
+				tempe	,	templ	,	u		,	ux		,	uy		,	uz		,	inclm	,
+				mm		,	nm		,	nodem	,	xinc	,	xincp	,	xl		,	xlm		,
+				mp		,	xmdf	,	xmx		,	xmy		,	nodedf	,	xnode	,	nodep	,
+				tc		,	dndt	,	x2o3;
 		int ktr;
 
 		/* ------------------ set mathematical constants --------------- */
 		// sgp4fix divisor for divide by zero check on inclination
-		const double temp4    =   1.0 + cos(CUDART_PI-1.0e-9);
-		twopi = 2.0 * CUDART_PI;
+		//const double temp4    =   1.0 + cos(CUDART_PI-1.0e-9);
+		//twopi = 2.0 * CUDART_PI;
 		x2o3  = 2.0 / 3.0;
 		// sgp4fix identify constants and allow alternate values
 		//vkmpersec     = gravity_constants.radiusearthkm * gravity_constants.xke/60.0;
@@ -127,14 +124,14 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		emsq   = em * em;
 		temp   = 1.0 - emsq;
 
-		nodem  = fmod(nodem, twopi);
-		argpm  = fmod(argpm, twopi);
-		xlm    = fmod(xlm, twopi);
-		mm     = fmod(xlm - argpm - nodem, twopi);
+		nodem  = fmod(nodem, 2.0 * CUDART_PI);
+		argpm  = fmod(argpm, 2.0 * CUDART_PI);
+		xlm    = fmod(xlm, 2.0 * CUDART_PI);
+		mm     = fmod(xlm - argpm - nodem, 2.0 * CUDART_PI);
 
 		/* ----------------- compute extra mean quantities ------------- */
-		sinim = sin(inclm);
-		cosim = cos(inclm);
+		/*sinim = sin(inclm);
+		cosim = cos(inclm);*/
 
 		/* -------------------- add lunar-solar periodics -------------- */
 		ep     = em;
@@ -142,8 +139,8 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		argpp  = argpm;
 		nodep  = nodem;
 		mp     = mm;
-		sinip  = sinim;
-		cosip  = cosim;
+		sinip  = sin(inclm);
+		cosip  = cos(inclm);
 		if (satrec[tid].method == 'd')
 		{
 			dpper
@@ -184,7 +181,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			if (fabs(cosip+1.0) > 1.5e-12)
 				satrec[tid].xlcof = -0.25 * gravity_constants.j3oj2 * sinip * (3.0 + 5.0 * cosip) / (1.0 + cosip);
 			else
-				satrec[tid].xlcof = -0.25 * gravity_constants.j3oj2 * sinip * (3.0 + 5.0 * cosip) / temp4;
+				satrec[tid].xlcof = -0.25 * gravity_constants.j3oj2 * sinip * (3.0 + 5.0 * cosip) / (1.0 + cos(CUDART_PI-1.0e-9));
 		}
 		axnl = ep * cos(argpp);
 		temp = 1.0 / (am * (1.0 - ep * ep));
@@ -192,7 +189,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		xl   = mp + argpp + nodep + temp * satrec[tid].xlcof * axnl;
 
 		/* --------------------- solve kepler's equation --------------- */
-		u    = fmod(xl - nodep, twopi);
+		u    = fmod(xl - nodep, 2.0 * CUDART_PI);
 		eo1  = u;
 		tem5 = 9999.9;
 		ktr = 1;
@@ -205,6 +202,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			tem5   = 1.0 - coseo1 * axnl - sineo1 * aynl;
 			tem5   = (u - aynl * coseo1 + axnl * sineo1 - eo1) / tem5;
 			if(fabs(tem5) >= 0.95)
+
 				tem5 = tem5 > 0.0 ? 0.95 : -0.95;
 			eo1    = eo1 + tem5;
 			ktr = ktr + 1;
@@ -227,14 +225,24 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			//rvdotl = sqrt(pl) / rl;
 			betal  = sqrt(1.0 - el2);
 			temp   = esine / (1.0 + betal);
-			sinu   = am / rl * (sineo1 - aynl - axnl * temp);
-			cosu   = am / rl * (coseo1 - axnl + aynl * temp);
-			su     = atan2(sinu, cosu);
-			sin2u  = (cosu + cosu) * sinu;
-			cos2u  = 1.0 - 2.0 * sinu * sinu;
+			//sinu   = am / rl * (sineo1 - aynl - axnl * temp);
+			//cosu   = am / rl * (coseo1 - axnl + aynl * temp);
+			su     = atan2(am / rl * (sineo1 - aynl - axnl * temp), am / rl * (coseo1 - axnl + aynl * temp));
+			sin2u  = ( am / rl * (coseo1 - axnl + aynl * temp) +  am / rl * (coseo1 - axnl + aynl * temp)) * (am / rl * (sineo1 - aynl - axnl * temp));
+			cos2u  = 1.0 - 2.0 * (am / rl * (sineo1 - aynl - axnl * temp)) * (am / rl * (sineo1 - aynl - axnl * temp));
 			temp   = 1.0 / pl;
 			temp1  = 0.5 * gravity_constants.j2 * temp;
 			temp2  = temp1 * temp;
+			//betal  = sqrt(1.0 - el2);
+			//temp   = esine / (1.0 + betal);
+			//sinu   = am / rl * (sineo1 - aynl - axnl * temp);
+			//cosu   = am / rl * (coseo1 - axnl + aynl * temp);
+			//su     = atan2(sinu, cosu);
+			//sin2u  = (cosu + cosu) * sinu;
+			//cos2u  = 1.0 - 2.0 * sinu * sinu;
+			//temp   = 1.0 / pl;
+			//temp1  = 0.5 * gravity_constants.j2 * temp;
+			//temp2  = temp1 * temp;
 
 			/* -------------- update for short period periodics ------------ */
 			if (satrec[tid].method == 'd')
@@ -253,7 +261,18 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			//rvdot = rvdotl + nm * temp1 * (satrec[tid].x1mth2 * cos2u + 1.5 * satrec[tid].con41) / gravity_constants.xke;
 
 			/* --------------------- orientation vectors ------------------- */
-			sinsu =  sin(su);
+			/*sinsu =  sin(su);
+			cossu =  cos(su);
+			snod  =  sin(xnode);
+			cnod  =  cos(xnode);
+			sini  =  sin(xinc);
+			cosi  =  cos(xinc);*/
+			xmx   = -sin(xnode) * cos(xinc);
+			xmy   =  cos(xnode) * cos(xinc);
+			ux    =  xmx * sin(su) + cos(xnode) * cos(su);
+			uy    =  xmy * sin(su) + sin(xnode) * cos(su);
+			uz    =  sin(xinc) * sin(su);
+			/*sinsu =  sin(su);
 			cossu =  cos(su);
 			snod  =  sin(xnode);
 			cnod  =  cos(xnode);
@@ -263,7 +282,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			xmy   =  cnod * cosi;
 			ux    =  xmx * sinsu + cnod * cossu;
 			uy    =  xmy * sinsu + snod * cossu;
-			uz    =  sini * sinsu;
+			uz    =  sini * sinsu;*/
 			//vx    =  xmx * cossu - cnod * sinsu;
 			//vy    =  xmy * cossu - snod * sinsu;
 			//vz    =  sini * cossu;
@@ -312,7 +331,7 @@ __device__ static void dspace
 	double& mm,    double& xni,   double& nodem,  double& dndt,  double& nm
 	)
 {
-	const double twopi = 2.0 * CUDART_PI;
+	//const double twopi = 2.0 * CUDART_PI;
 	int iretn , iret;
 	double delt, ft, theta, x2li, x2omi, xl, xldot , xnddt, xndt, xomi, g22, g32,
 		g44, g52, g54, fasx2, fasx4, fasx6, rptim , step2, stepn , stepp;
@@ -333,7 +352,7 @@ __device__ static void dspace
 
 	/* ----------- calculate deep space resonance effects ----------- */
 	dndt   = 0.0;
-	theta  = fmod(gsto + tc * rptim, twopi);
+	theta  = fmod(gsto + tc * rptim, 2.0 * CUDART_PI);
 	em     = em + dedt * t;
 
 	inclm  = inclm + didt * t;

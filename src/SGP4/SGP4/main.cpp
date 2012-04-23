@@ -71,6 +71,7 @@ void calculateFPS();
 void drawFPS();
 //Number of frames
 unsigned int frame = 0;
+unsigned int frameNum = 0;
 //Frames per second
 float fps = 0.0;
 //Time
@@ -220,7 +221,7 @@ void drawFPS()
 	glLoadIdentity ();
 
 	//  Print the FPS to the window
-	printw (-17, 16, -30, "FPS: %4.2f", fps);
+	printw (-17, 16, -30, "FPS: %4.2f - Frame : %i", fps, frameNum);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -370,11 +371,18 @@ void motion(int x, int y)
 //! Idle
 ////////////////////////////////////////////////////////////////////////////////
 void idle(void){
+	
+	if(frameNum == 100){
+        deleteVBOs( vbo_pos );
+		FreeVariables();
+		exit(0);
+	}
 	// Calculate FPS
 	calculateFPS();
 
-	//
 	glutPostRedisplay ();
+
+
 }
 
 //-------------------------------------------------------------------------
@@ -384,7 +392,8 @@ void calculateFPS()
 {
     //  Increase frame count
     frame++;
-	
+	frameNum++;
+
     //  Get the number of milliseconds since glutInit called 
     //  (or first call to glutGet(GLUT ELAPSED TIME)).
     currentTime = glutGet(GLUT_ELAPSED_TIME);
