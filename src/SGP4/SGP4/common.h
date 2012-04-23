@@ -30,6 +30,15 @@
 //#include <time.h>
 //#include <memory.h>
 
+#define HANDLE_ERROR(error) (handle_error(error, __FILE__, __LINE__ ))
+#include <GL/glew.h>
+
+#if defined (__APPLE__) || defined(MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 
 #include <math.h>
 #include <iostream>
@@ -38,20 +47,29 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <assert.h>
 
-#include <shrQATest.h>
 #include <cutil_inline.h>
+#include <cutil_math.h>
+#include <cuda_gl_interop.h>
+#include <shrQATest.h>
+
+#include <thrust/host_vector.h>
+#include <thrust/device_vector.h>
 
 #include "constants.h"
 #include "satelliterecord.h"
-#include <thrust\host_vector.h>
-
-#include <thrust\device_vector.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Common constants
 ///////////////////////////////////////////////////////////////////////////////
-const int StrideAlignment = 32;
+static const int StrideAlignment = 32;
+
+#define NUM_THREADS 512
+//int *numberSatellites;
+
+
+//float4 *d_position, *d_velocity;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Common functions

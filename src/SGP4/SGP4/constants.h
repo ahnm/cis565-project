@@ -3,12 +3,12 @@
 
 #include "common.h"
 
-typedef enum
+enum gravconsttype
 {
   wgs72old,
   wgs72,
   wgs84
-} gravconsttype;
+};
 
 struct gravconstant_t{
 	double	mu,

@@ -16,7 +16,7 @@ __device__ static void dspace
 	);
 
 
-__global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double3 *r, double3 *v)
+__global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4 *r)
 {
 #define STRIDE		0
 #define OFFSET		0
@@ -29,14 +29,14 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 			cos2u, coseo1, cosi , cosip ,  cosisq, cossu , cosu,
 			delm , delomg, em   , emsq  ,  ecose , el2   , eo1 ,
 			ep   , esine , argpm, argpp ,  argpdf, pl,     mrt = 0.0,
-			mvt  , rdotl , rl   , rvdot ,  rvdotl, sinim ,
+			/*mvt  ,*/ /*rdotl ,*/ rl   , /*rvdot ,*/  /*rvdotl,*/ sinim ,
 			sin2u, sineo1, sini , sinip ,  sinsu , sinu  ,
 			snod , su    , t2   , t3    ,  t4    , tem5  , temp,
 			temp1, temp2 , tempa, tempe ,  templ , u     , ux  ,
-			uy   , uz    , vx   , vy    ,  vz    , inclm , mm  ,
+			uy   , uz    , /*vx   , vy    ,  vz    ,*/ inclm , mm  ,
 			nm   , nodem, xinc , xincp ,  xl    , xlm   , mp  ,
 			xmdf , xmx   , xmy  , nodedf, xnode , nodep, tc  , dndt,
-			twopi, x2o3  , vkmpersec;
+			twopi, x2o3  /*, vkmpersec*/;
 		int ktr;
 
 		/* ------------------ set mathematical constants --------------- */
@@ -45,7 +45,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 		twopi = 2.0 * CUDART_PI;
 		x2o3  = 2.0 / 3.0;
 		// sgp4fix identify constants and allow alternate values
-		vkmpersec     = gravity_constants.radiusearthkm * gravity_constants.xke/60.0;
+		//vkmpersec     = gravity_constants.radiusearthkm * gravity_constants.xke/60.0;
 	
 		/* --------------------- clear sgp4 error flag ----------------- */
 		satrec[tid].t     = tsince;
@@ -223,8 +223,8 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 		else
 		{
 			rl     = am * (1.0 - ecose);
-			rdotl  = sqrt(am) * esine/rl;
-			rvdotl = sqrt(pl) / rl;
+			//rdotl  = sqrt(am) * esine/rl;
+			//rvdotl = sqrt(pl) / rl;
 			betal  = sqrt(1.0 - el2);
 			temp   = esine / (1.0 + betal);
 			sinu   = am / rl * (sineo1 - aynl - axnl * temp);
@@ -249,9 +249,8 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 			su    = su - 0.25 * temp2 * satrec[tid].x7thm1 * sin2u;
 			xnode = nodep + 1.5 * temp2 * cosip * sin2u;
 			xinc  = xincp + 1.5 * temp2 * cosip * sinip * cos2u;
-			mvt   = rdotl - nm * temp1 * satrec[tid].x1mth2 * sin2u / gravity_constants.xke;
-			rvdot = rvdotl + nm * temp1 * (satrec[tid].x1mth2 * cos2u +
-				1.5 * satrec[tid].con41) / gravity_constants.xke;
+			//mvt   = rdotl - nm * temp1 * satrec[tid].x1mth2 * sin2u / gravity_constants.xke;
+			//rvdot = rvdotl + nm * temp1 * (satrec[tid].x1mth2 * cos2u + 1.5 * satrec[tid].con41) / gravity_constants.xke;
 
 			/* --------------------- orientation vectors ------------------- */
 			sinsu =  sin(su);
@@ -265,9 +264,9 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 			ux    =  xmx * sinsu + cnod * cossu;
 			uy    =  xmy * sinsu + snod * cossu;
 			uz    =  sini * sinsu;
-			vx    =  xmx * cossu - cnod * sinsu;
-			vy    =  xmy * cossu - snod * sinsu;
-			vz    =  sini * cossu;
+			//vx    =  xmx * cossu - cnod * sinsu;
+			//vy    =  xmy * cossu - snod * sinsu;
+			//vz    =  sini * cossu;
 
 			/* --------- position and velocity (in km and km/sec) ---------- */
 			//r[0] = (mrt * ux)* gravity_constants.radiusearthkm;
@@ -276,12 +275,16 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, double
 			//v[0] = (mvt * ux + rvdot * vx) * vkmpersec;
 			//v[1] = (mvt * uy + rvdot * vy) * vkmpersec;
 			//v[2] = (mvt * uz + rvdot * vz) * vkmpersec;
-			r[tid].x = (mrt * ux)* gravity_constants.radiusearthkm;
-			r[tid].y = (mrt * uy)* gravity_constants.radiusearthkm;
-			r[tid].z = (mrt * uz)* gravity_constants.radiusearthkm;
-			v[tid].x = (mvt * ux + rvdot * vx) * vkmpersec;
-			v[tid].y = (mvt * uy + rvdot * vy) * vkmpersec;
-			v[tid].z = (mvt * uz + rvdot * vz) * vkmpersec;
+			//r[tid].x = (mrt * ux)* gravity_constants.radiusearthkm;
+			//r[tid].y = (mrt * uy)* gravity_constants.radiusearthkm;
+			//r[tid].z = (mrt * uz)* gravity_constants.radiusearthkm;
+			//v[tid].x = (mvt * ux + rvdot * vx) * vkmpersec;
+			//v[tid].y = (mvt * uy + rvdot * vy) * vkmpersec;
+			//v[tid].z = (mvt * uz + rvdot * vz) * vkmpersec;
+			r[tid].x = (mrt * ux);
+			r[tid].y = (mrt * uy);
+			r[tid].z = (mrt * uz);
+			r[tid].w = 1.0;
 		}  // if pl > 0
 
 		// sgp4fix for decaying satellites

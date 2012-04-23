@@ -21,9 +21,6 @@
     <ClInclude Include="functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sgp4CUDA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -31,6 +28,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sgp4CUDA.cuh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
