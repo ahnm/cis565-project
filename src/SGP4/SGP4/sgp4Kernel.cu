@@ -25,22 +25,19 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 	//int tid = block_start_idx + ((threadIdx.x + OFFSET) % STRIDE);
 	int tid = block_start_idx + threadIdx.x;
 	if(tid < N){
-		double	am		,	axnl	,	aynl	,	betal	,	cos2u	,	coseo1	,	cosip	,
-				cosisq	,	delm	,	delomg	,	em		,	emsq	,	ecose	,	el2		,
-				eo1		,	ep		,	esine	,	argpm	,	argpp	,	argpdf	,	pl		,
-				mrt		,	rl		,	sin2u	,	sineo1	,	sinip	,	su		,	t2		,
-				t3		,	t4		,	tem5	,	temp	,	temp1	,	temp2	,	tempa	,
-				tempe	,	templ	,	u		,	ux		,	uy		,	uz		,	inclm	,
-				mm		,	nm		,	nodem	,	xinc	,	xincp	,	xl		,	xlm		,
-				mp		,	xmdf	,	xmx		,	xmy		,	nodedf	,	xnode	,	nodep	,
-				tc		,	dndt	,	x2o3;
+		double	am		,	cos2u	,	coseo1	,	cosip	,	cosisq	,	delm	,	delomg	,	em		,	
+				el2		,	eo1		,	ep		,	esine	,	argpm	,	pl		,	mrt		,	rl		,
+				sin2u	,	sineo1	,	sinip	,	su		,	tem5	,	tempa	,
+				tempe	,	templ	,	u		,	ux		,	uy		,	uz		,	inclm	,	mm		,
+				nm		,	nodem	,	xinc	,	xincp	,	xl		,	xlm		,	mp		,	xnode	,	
+				nodep	,	tc		,	dndt	;
 		int ktr;
 
 		/* ------------------ set mathematical constants --------------- */
 		// sgp4fix divisor for divide by zero check on inclination
 		//const double temp4    =   1.0 + cos(CUDART_PI-1.0e-9);
 		//twopi = 2.0 * CUDART_PI;
-		x2o3  = 2.0 / 3.0;
+		//x2o3  = 2.0 / 3.0;
 		// sgp4fix identify constants and allow alternate values
 		//vkmpersec     = gravity_constants.radiusearthkm * gravity_constants.xke/60.0;
 	
@@ -49,34 +46,37 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		satrec[tid].error = 0;
 
 		/* ------- update for secular gravity and atmospheric drag ----- */
-		xmdf    = satrec[tid].mo + satrec[tid].mdot * satrec[tid].t;
-		argpdf  = satrec[tid].argpo + satrec[tid].argpdot * satrec[tid].t;
-		nodedf  = satrec[tid].nodeo + satrec[tid].nodedot * satrec[tid].t;
-		argpm   = argpdf;
-		mm      = xmdf;
-		t2      = satrec[tid].t * satrec[tid].t;
-		nodem   = nodedf + satrec[tid].nodecf * t2;
+		//xmdf    = satrec[tid].mo + satrec[tid].mdot * satrec[tid].t;
+		//argpdf  = satrec[tid].argpo + satrec[tid].argpdot * satrec[tid].t;
+		//nodedf  = satrec[tid].nodeo + satrec[tid].nodedot * satrec[tid].t;
+		argpm   = satrec[tid].argpo + satrec[tid].argpdot * satrec[tid].t;
+		mm      = satrec[tid].mo + satrec[tid].mdot * satrec[tid].t;
+		//t2      = satrec[tid].t * satrec[tid].t;
+		//nodem   = nodedf + satrec[tid].nodecf * t2;
+		//nodem   = nodedf + satrec[tid].nodecf * pow(satrec[tid].t, 2.0);
+		nodem   = (satrec[tid].nodeo + satrec[tid].nodedot * satrec[tid].t) + satrec[tid].nodecf * pow(satrec[tid].t, 2.0);
 		tempa   = 1.0 - satrec[tid].cc1 * satrec[tid].t;
 		tempe   = satrec[tid].bstar * satrec[tid].cc4 * satrec[tid].t;
-		templ   = satrec[tid].t2cof * t2;
+		templ   = satrec[tid].t2cof * pow(satrec[tid].t, 2.0);
 
 		if (satrec[tid].isimp != 1)
 		{
 			delomg = satrec[tid].omgcof * satrec[tid].t;
 			delm   = satrec[tid].xmcof *
-				(pow((1.0 + satrec[tid].eta * cos(xmdf)), 3) -
+				(pow((1.0 + satrec[tid].eta * cos(satrec[tid].mo + satrec[tid].mdot * satrec[tid].t)), 3) -
 				satrec[tid].delmo);
-			temp   = delomg + delm;
-			mm     = xmdf + temp;
-			argpm  = argpdf - temp;
-			t3     = t2 * satrec[tid].t;
-			t4     = t3 * satrec[tid].t;
-			tempa  = tempa - satrec[tid].d2 * t2 - satrec[tid].d3 * t3 -
-				satrec[tid].d4 * t4;
-			tempe  = tempe + satrec[tid].bstar * satrec[tid].cc5 * (sin(mm) -
-				satrec[tid].sinmao);
-			templ  = templ + satrec[tid].t3cof * t3 + t4 * (satrec[tid].t4cof +
-				satrec[tid].t * satrec[tid].t5cof);
+			//temp   = delomg + delm;
+			mm     = satrec[tid].mo + satrec[tid].mdot * satrec[tid].t + delomg + delm;
+			argpm  = (satrec[tid].argpo + satrec[tid].argpdot * satrec[tid].t) - (delomg + delm);
+			//t3     = t2 * satrec[tid].t;
+			//t3     = pow(satrec[tid].t, 3.0);
+			//t4     = t3 * satrec[tid].t;
+			//t4     = pow(satrec[tid].t, 4.0);
+			//tempa  = tempa - satrec[tid].d2 * t2 - satrec[tid].d3 * t3 - satrec[tid].d4 * t4;
+			tempa  = tempa - satrec[tid].d2 * pow(satrec[tid].t, 2.0) - satrec[tid].d3 * pow(satrec[tid].t, 3.0) - satrec[tid].d4 * pow(satrec[tid].t, 4.0);
+			tempe  = tempe + satrec[tid].bstar * satrec[tid].cc5 * (sin(mm) - satrec[tid].sinmao);
+			//templ  = templ + satrec[tid].t3cof * t3 + t4 * (satrec[tid].t4cof + satrec[tid].t * satrec[tid].t5cof);
+			templ  = templ + satrec[tid].t3cof * pow(satrec[tid].t, 3.0) + pow(satrec[tid].t, 4.0) * (satrec[tid].t4cof + satrec[tid].t * satrec[tid].t5cof);
 		}
 
 		nm    = satrec[tid].no;
@@ -107,7 +107,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			//         printf("# error nm %f\n", nm);
 			satrec[tid].error = 2;
 		}
-		am = pow((gravity_constants.xke / nm),x2o3) * tempa * tempa;
+		am = pow((gravity_constants.xke / nm),2.0 / 3.0) * tempa * tempa;
 		nm = gravity_constants.xke / pow(am, 1.5);
 		em = em - tempe;
 
@@ -121,8 +121,8 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			em  = 1.0e-6;
 		mm     = mm + satrec[tid].no * templ;
 		xlm    = mm + argpm + nodem;
-		emsq   = em * em;
-		temp   = 1.0 - emsq;
+		//emsq   = em * em;
+		//temp   = 1.0 - emsq;
 
 		nodem  = fmod(nodem, 2.0 * CUDART_PI);
 		argpm  = fmod(argpm, 2.0 * CUDART_PI);
@@ -136,7 +136,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		/* -------------------- add lunar-solar periodics -------------- */
 		ep     = em;
 		xincp  = inclm;
-		argpp  = argpm;
+		//argpp  = argpm;
 		nodep  = nodem;
 		mp     = mm;
 		sinip  = sin(inclm);
@@ -156,13 +156,13 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 				satrec[tid].xh3,  satrec[tid].xi2,  satrec[tid].xi3,
 				satrec[tid].xl2,  satrec[tid].xl3,  satrec[tid].xl4,
 				satrec[tid].zmol, satrec[tid].zmos, satrec[tid].inclo,
-				'n', ep, xincp, nodep, argpp, mp
+				'n', ep, xincp, nodep, argpm, mp
 				);
 			if (xincp < 0.0)
 			{
 				xincp  = -xincp;
 				nodep = nodep + CUDART_PI;
-				argpp  = argpp - CUDART_PI;
+				argpm  = argpm - CUDART_PI;
 			}
 			if ((ep < 0.0 ) || ( ep > 1.0))
 			{
@@ -183,10 +183,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			else
 				satrec[tid].xlcof = -0.25 * gravity_constants.j3oj2 * sinip * (3.0 + 5.0 * cosip) / (1.0 + cos(CUDART_PI-1.0e-9));
 		}
-		axnl = ep * cos(argpp);
-		temp = 1.0 / (am * (1.0 - ep * ep));
-		aynl = ep* sin(argpp) + temp * satrec[tid].aycof;
-		xl   = mp + argpp + nodep + temp * satrec[tid].xlcof * axnl;
+		//axnl = ep * cos(argpp);
+		//temp = 1.0 / (am * (1.0 - ep * ep));
+		//aynl = ep* sin(argpp) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof;
+		xl   = mp + argpm + nodep + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].xlcof * (ep * cos(argpm));
 
 		/* --------------------- solve kepler's equation --------------- */
 		u    = fmod(xl - nodep, 2.0 * CUDART_PI);
@@ -199,19 +199,20 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		{
 			sineo1 = sin(eo1);
 			coseo1 = cos(eo1);
-			tem5   = 1.0 - coseo1 * axnl - sineo1 * aynl;
-			tem5   = (u - aynl * coseo1 + axnl * sineo1 - eo1) / tem5;
+			tem5   = 1.0 - coseo1 * (ep * cos(argpm)) - sineo1 * (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof);
+			tem5   = (u - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) * coseo1 + (ep * cos(argpm)) * sineo1 - eo1) / tem5;
 			if(fabs(tem5) >= 0.95)
 
 				tem5 = tem5 > 0.0 ? 0.95 : -0.95;
 			eo1    = eo1 + tem5;
-			ktr = ktr + 1;
+			//ktr = ktr + 1;
+			ktr++;
 		}
 
 		/* ------------- short period preliminary quantities ----------- */
-		ecose = axnl*coseo1 + aynl*sineo1;
-		esine = axnl*sineo1 - aynl*coseo1;
-		el2   = axnl*axnl + aynl*aynl;
+		//ecose = (ep * cos(argpp))*coseo1 + (ep* sin(argpp) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof)*sineo1;
+		esine = (ep * cos(argpm))*sineo1 - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof)*coseo1;
+		el2   = (ep * cos(argpm))*(ep * cos(argpm)) + (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof)*(ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof);
 		pl    = am*(1.0-el2);
 		if (pl < 0.0)
 		{
@@ -220,19 +221,20 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		}
 		else
 		{
-			rl     = am * (1.0 - ecose);
+			rl     = am * (1.0 - (ep * cos(argpm))*coseo1 + (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof)*sineo1);
 			//rdotl  = sqrt(am) * esine/rl;
 			//rvdotl = sqrt(pl) / rl;
-			betal  = sqrt(1.0 - el2);
-			temp   = esine / (1.0 + betal);
+			//betal  = sqrt(1.0 - el2);
+			//temp   = esine / (1.0 + betal);
 			//sinu   = am / rl * (sineo1 - aynl - axnl * temp);
 			//cosu   = am / rl * (coseo1 - axnl + aynl * temp);
-			su     = atan2(am / rl * (sineo1 - aynl - axnl * temp), am / rl * (coseo1 - axnl + aynl * temp));
-			sin2u  = ( am / rl * (coseo1 - axnl + aynl * temp) +  am / rl * (coseo1 - axnl + aynl * temp)) * (am / rl * (sineo1 - aynl - axnl * temp));
-			cos2u  = 1.0 - 2.0 * (am / rl * (sineo1 - aynl - axnl * temp)) * (am / rl * (sineo1 - aynl - axnl * temp));
-			temp   = 1.0 / pl;
-			temp1  = 0.5 * gravity_constants.j2 * temp;
-			temp2  = temp1 * temp;
+			su     = atan2(	am / rl * (sineo1 - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) - (ep * cos(argpm)) * esine / (1.0 + sqrt(1.0 - el2))),
+							am / rl * (coseo1 - (ep * cos(argpm)) + (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) * esine / (1.0 + sqrt(1.0 - el2))));
+			sin2u  = ( am / rl * (coseo1 - (ep * cos(argpm)) + (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) * esine / (1.0 + sqrt(1.0 - el2))) +  am / rl * (coseo1 - (ep * cos(argpm)) + (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) * esine / (1.0 + sqrt(1.0 - el2)))) * (am / rl * (sineo1 - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) - (ep * cos(argpm)) * esine / (1.0 + sqrt(1.0 - el2))));
+			cos2u  = 1.0 - 2.0 * (am / rl * (sineo1 - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) - (ep * cos(argpm)) * esine / (1.0 + sqrt(1.0 - el2)))) * (am / rl * (sineo1 - (ep* sin(argpm) + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].aycof) - (ep * cos(argpm)) * esine / (1.0 + sqrt(1.0 - el2))));
+			//temp   = 1.0 / pl;
+			//temp1  = 0.5 * gravity_constants.j2 * (1.0 / pl);
+			//temp2  = (0.5 * gravity_constants.j2 * (1.0 / pl)) * (1.0 / pl);
 			//betal  = sqrt(1.0 - el2);
 			//temp   = esine / (1.0 + betal);
 			//sinu   = am / rl * (sineo1 - aynl - axnl * temp);
@@ -252,11 +254,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 				satrec[tid].x1mth2 = 1.0 - cosisq;
 				satrec[tid].x7thm1 = 7.0*cosisq - 1.0;
 			}
-			mrt   = rl * (1.0 - 1.5 * temp2 * betal * satrec[tid].con41) +
-				0.5 * temp1 * satrec[tid].x1mth2 * cos2u;
-			su    = su - 0.25 * temp2 * satrec[tid].x7thm1 * sin2u;
-			xnode = nodep + 1.5 * temp2 * cosip * sin2u;
-			xinc  = xincp + 1.5 * temp2 * cosip * sinip * cos2u;
+			mrt   = rl * (1.0 - 1.5 * ((0.5 * gravity_constants.j2 * (1.0 / pl)) * (1.0 / pl)) * sqrt(1.0 - el2) * satrec[tid].con41) + 0.5 * (0.5 * gravity_constants.j2 * (1.0 / pl)) * satrec[tid].x1mth2 * cos2u;
+			su    = su - 0.25 * ((0.5 * gravity_constants.j2 * (1.0 / pl)) * (1.0 / pl)) * satrec[tid].x7thm1 * sin2u;
+			xnode = nodep + 1.5 * ((0.5 * gravity_constants.j2 * (1.0 / pl)) * (1.0 / pl)) * cosip * sin2u;
+			xinc  = xincp + 1.5 * ((0.5 * gravity_constants.j2 * (1.0 / pl)) * (1.0 / pl)) * cosip * sinip * cos2u;
 			//mvt   = rdotl - nm * temp1 * satrec[tid].x1mth2 * sin2u / gravity_constants.xke;
 			//rvdot = rvdotl + nm * temp1 * (satrec[tid].x1mth2 * cos2u + 1.5 * satrec[tid].con41) / gravity_constants.xke;
 
@@ -267,10 +268,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			cnod  =  cos(xnode);
 			sini  =  sin(xinc);
 			cosi  =  cos(xinc);*/
-			xmx   = -sin(xnode) * cos(xinc);
-			xmy   =  cos(xnode) * cos(xinc);
-			ux    =  xmx * sin(su) + cos(xnode) * cos(su);
-			uy    =  xmy * sin(su) + sin(xnode) * cos(su);
+			/*xmx   = -sin(xnode) * cos(xinc);
+			xmy   =  cos(xnode) * cos(xinc);*/
+			ux    =  (-sin(xnode) * cos(xinc)) * sin(su) + cos(xnode) * cos(su);
+			uy    =  (cos(xnode) * cos(xinc)) * sin(su) + sin(xnode) * cos(su);
 			uz    =  sin(xinc) * sin(su);
 			/*sinsu =  sin(su);
 			cossu =  cos(su);
