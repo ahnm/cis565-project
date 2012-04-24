@@ -11,6 +11,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4", "SGP4\SGP4.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4_CPU", "SGP4_CPU\SGP4_CPU.vcxproj", "{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6DA6C12-DD66-4954-A9AD-8FC3C5D9ED5B}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+		SGP4_CPU.psess = SGP4_CPU.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

@@ -80,6 +80,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;glew64.lib;kernel32.lib;LIBCMTD.LIB;LIBCPMTD.LIB;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../../common/lib/$(Platform);../../../shared/lib/$(Platform);</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -94,6 +95,7 @@
       <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;cudart.lib;glew64.lib;cutil64D.lib;shrUtils64D.lib;kernel32.lib;LIBCMTD.LIB;LIBCPMTD.LIB</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../../common/lib/$(Platform);../../../shared/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
