@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutil", "..\..\common\cutil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4", "SGP4\SGP4.vcxproj", "{E0AE61D3-E1A5-4268-BC51-6DB35155ACE0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4_CPU", "SGP4_CPU\SGP4_CPU.vcxproj", "{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -47,6 +49,12 @@ Global
 		{E0AE61D3-E1A5-4268-BC51-6DB35155ACE0}.Release|Win32.Build.0 = Release|Win32
 		{E0AE61D3-E1A5-4268-BC51-6DB35155ACE0}.Release|x64.ActiveCfg = Release|x64
 		{E0AE61D3-E1A5-4268-BC51-6DB35155ACE0}.Release|x64.Build.0 = Release|x64
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Debug|Win32.Build.0 = Debug|Win32
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Debug|x64.ActiveCfg = Debug|Win32
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|Win32.ActiveCfg = Release|Win32
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|Win32.Build.0 = Release|Win32
+		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
