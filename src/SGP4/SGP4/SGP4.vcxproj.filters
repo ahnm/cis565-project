@@ -65,4 +65,7 @@
       <UniqueIdentifier>{4881e2a2-e8ff-46be-93a2-714bcbd7bed6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="NSightActivity.nvact" />
+  </ItemGroup>
 </Project>
