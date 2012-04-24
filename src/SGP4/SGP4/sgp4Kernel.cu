@@ -5,18 +5,18 @@
 __device__ static void dspace
 	(
 	int irez,
-	double d2201,  double d2211,  double d3210,   double d3222,  double d4410,
-	double d4422,  double d5220,  double d5232,   double d5421,  double d5433,
-	double dedt,   double del1,   double del2,    double del3,   double didt,
-	double dmdt,   double dnodt,  double domdt,   double argpo,  double argpdot,
-	double t,      double tc,     double gsto,    double xfact,  double xlamo,
-	double no,
-	double& atime, double& em,    double& argpm,  double& inclm, double& xli,
-	double& mm,    double& xni,   double& nodem,  double& dndt,  double& nm
+	t_var d2201,  t_var d2211,  t_var d3210,   t_var d3222,  t_var d4410,
+	t_var d4422,  t_var d5220,  t_var d5232,   t_var d5421,  t_var d5433,
+	t_var dedt,   t_var del1,   t_var del2,    t_var del3,   t_var didt,
+	t_var dmdt,   t_var dnodt,  t_var domdt,   t_var argpo,  t_var argpdot,
+	t_var t,      t_var tc,     t_var gsto,    t_var xfact,  t_var xlamo,
+	t_var no,
+	t_var& atime, t_var& em,    t_var& argpm,  t_var& inclm, t_var& xli,
+	t_var& mm,    t_var& xni,   t_var& nodem,  t_var& dndt,  t_var& nm
 	);
 
 
-__global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4 *r)
+__global__ void sgp4(satelliterecord_soa_t *satrec, int N, t_var tsince, float4 *r)
 {
 #define STRIDE		0
 #define OFFSET		0
@@ -25,7 +25,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 	//int tid = block_start_idx + ((threadIdx.x + OFFSET) % STRIDE);
 	int tid = block_start_idx + threadIdx.x;
 	if(tid < N){
-		double	am		,	cos2u	,	coseo1	,	cosip	,	cosisq	,	delm	,	delomg	,	em		,	
+		t_var	am		,	cos2u	,	coseo1	,	cosip	,	cosisq	,	delm	,	delomg	,	em		,	
 				el2		,	eo1		,	ep		,	esine	,	argpm	,	pl		,	mrt		,	rl		,
 				sin2u	,	sineo1	,	sinip	,	su		,	tem5	,	tempa	,
 				tempe	,	templ	,	u		,	ux		,	uy		,	uz		,	inclm	,	mm		,
@@ -54,10 +54,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		//t2      = satrec[tid].t * satrec[tid].t;
 		//nodem   = nodedf + satrec[tid].nodecf * t2;
 		//nodem   = nodedf + satrec[tid].nodecf * pow(satrec[tid].t, 2.0);
-		nodem   = (satrec[tid].nodeo + satrec[tid].nodedot * satrec[tid].t) + satrec[tid].nodecf * pow(satrec[tid].t, 2.0);
+		nodem   = (satrec[tid].nodeo + satrec[tid].nodedot * satrec[tid].t) + satrec[tid].nodecf * pow(satrec[tid].t, (t_var)2.0);
 		tempa   = 1.0 - satrec[tid].cc1 * satrec[tid].t;
 		tempe   = satrec[tid].bstar * satrec[tid].cc4 * satrec[tid].t;
-		templ   = satrec[tid].t2cof * pow(satrec[tid].t, 2.0);
+		templ   = satrec[tid].t2cof * pow(satrec[tid].t, (t_var)2.0);
 
 		if (satrec[tid].isimp != 1)
 		{
@@ -73,10 +73,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			//t4     = t3 * satrec[tid].t;
 			//t4     = pow(satrec[tid].t, 4.0);
 			//tempa  = tempa - satrec[tid].d2 * t2 - satrec[tid].d3 * t3 - satrec[tid].d4 * t4;
-			tempa  = tempa - satrec[tid].d2 * pow(satrec[tid].t, 2.0) - satrec[tid].d3 * pow(satrec[tid].t, 3.0) - satrec[tid].d4 * pow(satrec[tid].t, 4.0);
+			tempa  = tempa - satrec[tid].d2 * pow(satrec[tid].t, (t_var)2.0) - satrec[tid].d3 * pow(satrec[tid].t, (t_var)3.0) - satrec[tid].d4 * pow(satrec[tid].t, (t_var)4.0);
 			tempe  = tempe + satrec[tid].bstar * satrec[tid].cc5 * (sin(mm) - satrec[tid].sinmao);
 			//templ  = templ + satrec[tid].t3cof * t3 + t4 * (satrec[tid].t4cof + satrec[tid].t * satrec[tid].t5cof);
-			templ  = templ + satrec[tid].t3cof * pow(satrec[tid].t, 3.0) + pow(satrec[tid].t, 4.0) * (satrec[tid].t4cof + satrec[tid].t * satrec[tid].t5cof);
+			templ  = templ + satrec[tid].t3cof * pow(satrec[tid].t, (t_var)3.0) + pow(satrec[tid].t, (t_var)4.0) * (satrec[tid].t4cof + satrec[tid].t * satrec[tid].t5cof);
 		}
 
 		nm    = satrec[tid].no;
@@ -107,8 +107,8 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 			//         printf("# error nm %f\n", nm);
 			satrec[tid].error = 2;
 		}
-		am = pow((gravity_constants.xke / nm),2.0 / 3.0) * tempa * tempa;
-		nm = gravity_constants.xke / pow(am, 1.5);
+		am = pow((gravity_constants.xke / nm),(t_var)(2.0 / 3.0)) * tempa * tempa;
+		nm = gravity_constants.xke / pow(am, (t_var)1.5);
 		em = em - tempe;
 
 		// fix tolerance for error recognition
@@ -124,10 +124,10 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		//emsq   = em * em;
 		//temp   = 1.0 - emsq;
 
-		nodem  = fmod(nodem, 2.0 * CUDART_PI);
-		argpm  = fmod(argpm, 2.0 * CUDART_PI);
-		xlm    = fmod(xlm, 2.0 * CUDART_PI);
-		mm     = fmod(xlm - argpm - nodem, 2.0 * CUDART_PI);
+		nodem  = fmod(nodem, (t_var)(2.0 * CUDART_PI));
+		argpm  = fmod(argpm, (t_var)(2.0 * CUDART_PI));
+		xlm    = fmod(xlm, (t_var)(2.0 * CUDART_PI));
+		mm     = fmod(xlm - argpm - nodem, (t_var)(2.0 * CUDART_PI));
 
 		/* ----------------- compute extra mean quantities ------------- */
 		/*sinim = sin(inclm);
@@ -189,7 +189,7 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 		xl   = mp + argpm + nodep + (1.0 / (am * (1.0 - ep * ep))) * satrec[tid].xlcof * (ep * cos(argpm));
 
 		/* --------------------- solve kepler's equation --------------- */
-		u    = fmod(xl - nodep, 2.0 * CUDART_PI);
+		u    = fmod(xl - nodep, (t_var)(2.0 * CUDART_PI));
 		eo1  = u;
 		tem5 = 9999.9;
 		ktr = 1;
@@ -322,19 +322,19 @@ __global__ void sgp4(satelliterecord_soa_t *satrec, int N, double tsince, float4
 __device__ static void dspace
 	(
 	int irez,
-	double d2201,  double d2211,  double d3210,   double d3222,  double d4410,
-	double d4422,  double d5220,  double d5232,   double d5421,  double d5433,
-	double dedt,   double del1,   double del2,    double del3,   double didt,
-	double dmdt,   double dnodt,  double domdt,   double argpo,  double argpdot,
-	double t,      double tc,     double gsto,    double xfact,  double xlamo,
-	double no,
-	double& atime, double& em,    double& argpm,  double& inclm, double& xli,
-	double& mm,    double& xni,   double& nodem,  double& dndt,  double& nm
+	t_var d2201,  t_var d2211,  t_var d3210,   t_var d3222,  t_var d4410,
+	t_var d4422,  t_var d5220,  t_var d5232,   t_var d5421,  t_var d5433,
+	t_var dedt,   t_var del1,   t_var del2,    t_var del3,   t_var didt,
+	t_var dmdt,   t_var dnodt,  t_var domdt,   t_var argpo,  t_var argpdot,
+	t_var t,      t_var tc,     t_var gsto,    t_var xfact,  t_var xlamo,
+	t_var no,
+	t_var& atime, t_var& em,    t_var& argpm,  t_var& inclm, t_var& xli,
+	t_var& mm,    t_var& xni,   t_var& nodem,  t_var& dndt,  t_var& nm
 	)
 {
 	//const double twopi = 2.0 * CUDART_PI;
 	int iretn , iret;
-	double delt, ft, theta, x2li, x2omi, xl, xldot , xnddt, xndt, xomi, g22, g32,
+	t_var delt, ft, theta, x2li, x2omi, xl, xldot , xnddt, xndt, xomi, g22, g32,
 		g44, g52, g54, fasx2, fasx4, fasx6, rptim , step2, stepn , stepp;
 
 	ft    = 0.0;
@@ -353,7 +353,7 @@ __device__ static void dspace
 
 	/* ----------- calculate deep space resonance effects ----------- */
 	dndt   = 0.0;
-	theta  = fmod(gsto + tc * rptim, 2.0 * CUDART_PI);
+	theta  = fmod(gsto + tc * rptim, (t_var)(2.0 * CUDART_PI));
 	em     = em + dedt * t;
 
 	inclm  = inclm + didt * t;

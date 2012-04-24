@@ -1,14 +1,19 @@
+
+#include "common.h"
+
 #ifndef SATELLITE_RECORD
 #define SATELLITE_RECORD
 
-#include "common.h"
 #include <thrust\host_vector.h>
 #include <thrust\device_vector.h>
+
+//#define t_var float
+//#define t_var3 float3
 
 struct satelliterecord_aos_t{
 	int		satellite_num;
 	
-	double	a,				//semi-major axis
+	t_var	a,				//semi-major axis
 			e,				//eccentricity
 			i,				//inclination (radians)
 			raan,			//right ascension of the ascending node
@@ -26,7 +31,7 @@ struct satelliterecord_aos_t{
 			nu				//True Anomaly
 			;
 
-	double3	r,			//Position
+	t_var3	r,			//Position
 			v;			//Velocity
 };
 
@@ -39,14 +44,14 @@ typedef struct satelliterecord_soa_t
 
   /* Near Earth */
   int			isimp;
-  double		aycof  , con41  , cc1    , cc4      , cc5    , d2      , d3   , d4    ,
+  t_var		aycof  , con41  , cc1    , cc4      , cc5    , d2      , d3   , d4    ,
 				delmo  , eta    , argpdot, omgcof   , sinmao , t       , t2cof, t3cof ,
 				t4cof  , t5cof  , x1mth2 , x7thm1   , mdot   , nodedot, xlcof , xmcof ,
 				nodecf;
 
   /* Deep Space */
   int			irez;
-  double		d2201  , d2211  , d3210  , d3222    , d4410  , d4422   , d5220 , d5232 ,
+  t_var		d2201  , d2211  , d3210  , d3222    , d4410  , d4422   , d5220 , d5232 ,
 				d5421  , d5433  , dedt   , del1     , del2   , del3    , didt  , dmdt  ,
 				dnodt  , domdt  , e3     , ee2      , peo    , pgho    , pho   , pinco ,
 				plo    , se2    , se3    , sgh2     , sgh3   , sgh4    , sh2   , sh3   ,
@@ -54,7 +59,7 @@ typedef struct satelliterecord_soa_t
 				xgh3   , xgh4   , xh2    , xh3      , xi2    , xi3     , xl2   , xl3   ,
 				xl4    , xlamo  , zmol   , zmos     , atime  , xli     , xni;
 
-  double		a      , altp   , alta   , epochdays, jdsatepoch       , nddot , ndot  ,
+  t_var		a      , altp   , alta   , epochdays, jdsatepoch       , nddot , ndot  ,
 				bstar  , rcse   , inclo  , nodeo    , ecco             , argpo , mo    ,
 				no;
 } elsetrec;

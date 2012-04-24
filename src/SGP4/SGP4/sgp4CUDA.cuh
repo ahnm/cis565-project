@@ -11,7 +11,7 @@ void initSGP4CUDA(	gravconsttype whichconst,
 					int numberSatellites	);
 
 void ComputeSGP4CUDA(	float4 *positions,
-						double deltatime,
+						t_var deltatime,
 						int numberSatellites	);
 void FreeVariables();
 #endif

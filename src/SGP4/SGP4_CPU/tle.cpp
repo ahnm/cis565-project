@@ -43,20 +43,20 @@ void twolineelement2rv(std::ifstream &tle_read, std::vector<satelliterecord_aos_
 			epochyr = StringToNumber<int>(epoch_year_str);
 			epochyr = ( epochyr < 57 ) ? epochyr + 2000 : epochyr + 1900;
 
-			double epochdayofyear;
-			epochdayofyear = StringToNumber<double>(epoch_day_str);
+			t_var epochdayofyear;
+			epochdayofyear = StringToNumber<t_var>(epoch_day_str);
 
 			int month, day, hour, minute;
-			double second, jd;
+			t_var second, jd;
 
 			days2mdhms( epochyr, epochdayofyear, month, day, hour, minute, second );
 			jday(epochyr, month, day, hour, minute, second, jd);
 			SatRec[SatRec.size()-1].epoch_jd = jd;
 			/* End */
 
-			SatRec[SatRec.size()-1].n_dt = StringToNumber<double>(mean_motion_dt_str) / (xpdotp * 1440.0);
-			SatRec[SatRec.size()-1].n_ddt = StringExpToNumber<double>(mean_motion_ddt_str.insert(0,".")) / (xpdotp * 1440.0 * 1440.0);
-			SatRec[SatRec.size()-1].bstar = StringExpToNumber<double>(bstar_str.insert(0,"."));
+			SatRec[SatRec.size()-1].n_dt = StringToNumber<t_var>(mean_motion_dt_str) / (xpdotp * 1440.0);
+			SatRec[SatRec.size()-1].n_ddt = StringExpToNumber<t_var>(mean_motion_ddt_str.insert(0,".")) / (xpdotp * 1440.0 * 1440.0);
+			SatRec[SatRec.size()-1].bstar = StringExpToNumber<t_var>(bstar_str.insert(0,"."));
 
 
 		}else if(line_num.compare("2") == 0){
@@ -80,13 +80,13 @@ void twolineelement2rv(std::ifstream &tle_read, std::vector<satelliterecord_aos_
 				continue;
 			}
 			
-			SatRec[SatRec.size()-1].e		=	StringToNumber<double>(eccentricity_str.insert(0,"."));
-			SatRec[SatRec.size()-1].i		=	deg2rad<double>(StringToNumber<double>(inclination_str));
-			SatRec[SatRec.size()-1].raan	=	deg2rad<double>(StringToNumber<double>(raan_str));
-			SatRec[SatRec.size()-1].w		=	deg2rad<double>(StringToNumber<double>(argument_of_perigee_str));
-			SatRec[SatRec.size()-1].M		=	deg2rad<double>(StringToNumber<double>(mean_anomaly_str));
-			SatRec[SatRec.size()-1].n		=	StringToNumber<double>(mean_motion_str) / xpdotp;
-			SatRec[SatRec.size()-1].a		=	pow( SatRec[SatRec.size()-1].n * tumin, (-2.0/3.0) );
+			SatRec[SatRec.size()-1].e		=	StringToNumber<t_var>(eccentricity_str.insert(0,"."));
+			SatRec[SatRec.size()-1].i		=	deg2rad<t_var>(StringToNumber<t_var>(inclination_str));
+			SatRec[SatRec.size()-1].raan	=	deg2rad<t_var>(StringToNumber<t_var>(raan_str));
+			SatRec[SatRec.size()-1].w		=	deg2rad<t_var>(StringToNumber<t_var>(argument_of_perigee_str));
+			SatRec[SatRec.size()-1].M		=	deg2rad<t_var>(StringToNumber<t_var>(mean_anomaly_str));
+			SatRec[SatRec.size()-1].n		=	StringToNumber<t_var>(mean_motion_str) / xpdotp;
+			SatRec[SatRec.size()-1].a		=	pow( SatRec[SatRec.size()-1].n * tumin, (t_var)(-2.0/3.0) );
 		}
 	}
 }

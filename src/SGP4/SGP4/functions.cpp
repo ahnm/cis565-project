@@ -38,10 +38,10 @@
 *    none.
 * --------------------------------------------------------------------------- */
 
-void days2mdhms( int year, double days,	int& mon, int& day, int& hr, int& minute, double& sec )
+void days2mdhms( int year, t_var days,	int& mon, int& day, int& hr, int& minute, t_var& sec )
 {
 	int i, inttemp, dayofyr;
-	double    temp;
+	t_var    temp;
 	int lmonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 	dayofyr = (int)floor(days);
@@ -99,7 +99,7 @@ void days2mdhms( int year, double days,	int& mon, int& day, int& hr, int& minute
 *    vallado       2007, 189, alg 14, ex 3-14
 *
 * --------------------------------------------------------------------------- */
-void jday(int year, int mon, int day, int hr, int minute, double sec, double& jd)
+void jday(int year, int mon, int day, int hr, int minute, t_var sec, t_var& jd)
 {
 	jd = 367.0 * year -
 		floor((7 * (year + floor((mon + 9) / 12.0))) * 0.25) +

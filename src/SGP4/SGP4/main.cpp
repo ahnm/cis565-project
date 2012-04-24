@@ -1,3 +1,7 @@
+#define t_var float
+#define t_var3 float3
+#define t_var4 float4
+
 #include "common.h"
 
 const std::string tle = "1 00005U 58002B   00179.78495062  .00000023  00000-0  28098-4 0  4753\n\
@@ -30,11 +34,11 @@ int window_height = 512;
 
 GLuint vbo_pos[1];
 // Device buffer variables
-float4* d_pos;
-float4* d_vel;
+t_var4* d_pos;
+t_var4* d_vel;
 
 //delta time
-float deltatime = 0.01f;
+t_var deltatime = 0.01;
 
 // mouse controls
 int mouse_old_x, mouse_old_y;
@@ -97,7 +101,7 @@ void main(int argc, char **argv){
 	SatRec.erase(SatRec.begin(), SatRec.end());
 
 	glutInit(&argc, argv);
-    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE );
+	glutInitDisplayMode( GLUT_RGBA | GLUT_DEFINE_MODE );
     glutInitWindowSize( window_width, window_height);
     glutCreateWindow( " SGP4 CUDA Enabled ");
 
@@ -160,7 +164,7 @@ bool initGL()
 ////////////////////////////////////////////////////////////////////////////////
 //! Run the Cuda part of the computation
 ////////////////////////////////////////////////////////////////////////////////
-void runCuda( GLuint * vbo, float dt)
+void runCuda( GLuint * vbo, t_var dt)
 {
 	// map OpenGL buffer object for writing from CUDA
     float4* positions;

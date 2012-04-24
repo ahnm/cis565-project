@@ -29,19 +29,19 @@
 *    vallado       2004, 191, eq 3-45
 * --------------------------------------------------------------------------- */
 
-__device__ double  gstime
+__device__ t_var  gstime
 	(
-	double jdut1
+	t_var jdut1
 	)
 {
-	const double twopi = 2.0 * CUDART_PI;
-	const double deg2rad = CUDART_PI / 180.0;
-	double       temp, tut1;
+	const t_var twopi = 2.0 * CUDART_PI;
+	const t_var deg2rad = CUDART_PI / 180.0;
+	t_var       temp, tut1;
 
 	tut1 = (jdut1 - 2451545.0) / 36525.0;
 	temp = -6.2e-6* tut1 * tut1 * tut1 + 0.093104 * tut1 * tut1 +
 		(876600.0*3600 + 8640184.812866) * tut1 + 67310.54841;  // sec
-	temp = fmod(temp * deg2rad / 240.0, twopi); //360/86400 = 1/240, to deg, to rad
+	temp = fmod(temp * deg2rad / (t_var)240.0, twopi); //360/86400 = 1/240, to deg, to rad
 
 	// ------------------------ check quadrants ---------------------
 	if (temp < 0.0)

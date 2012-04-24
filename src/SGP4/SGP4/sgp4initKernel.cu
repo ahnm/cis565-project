@@ -9,57 +9,57 @@
 //extern __device__ __constant__ gravconstant_t gravity_constants;
 __device__ static void dscom
 	(
-	double epoch,  double ep,     double argpp,   double tc,     double inclp,
-	double nodep,  double np,
-	double& snodm, double& cnodm, double& sinim,  double& cosim, double& sinomm,
-	double& cosomm,double& day,   double& e3,     double& ee2,   double& em,
-	double& emsq,  double& gam,   double& peo,    double& pgho,  double& pho,
-	double& pinco, double& plo,   double& rtemsq, double& se2,   double& se3,
-	double& sgh2,  double& sgh3,  double& sgh4,   double& sh2,   double& sh3,
-	double& si2,   double& si3,   double& sl2,    double& sl3,   double& sl4,
-	double& s1,    double& s2,    double& s3,     double& s4,    double& s5,
-	double& s6,    double& s7,    double& ss1,    double& ss2,   double& ss3,
-	double& ss4,   double& ss5,   double& ss6,    double& ss7,   double& sz1,
-	double& sz2,   double& sz3,   double& sz11,   double& sz12,  double& sz13,
-	double& sz21,  double& sz22,  double& sz23,   double& sz31,  double& sz32,
-	double& sz33,  double& xgh2,  double& xgh3,   double& xgh4,  double& xh2,
-	double& xh3,   double& xi2,   double& xi3,    double& xl2,   double& xl3,
-	double& xl4,   double& nm,    double& z1,     double& z2,    double& z3,
-	double& z11,   double& z12,   double& z13,    double& z21,   double& z22,
-	double& z23,   double& z31,   double& z32,    double& z33,   double& zmol,
-	double& zmos
+	t_var epoch,  t_var ep,     t_var argpp,   t_var tc,     t_var inclp,
+	t_var nodep,  t_var np,
+	t_var& snodm, t_var& cnodm, t_var& sinim,  t_var& cosim, t_var& sinomm,
+	t_var& cosomm,t_var& day,   t_var& e3,     t_var& ee2,   t_var& em,
+	t_var& emsq,  t_var& gam,   t_var& peo,    t_var& pgho,  t_var& pho,
+	t_var& pinco, t_var& plo,   t_var& rtemsq, t_var& se2,   t_var& se3,
+	t_var& sgh2,  t_var& sgh3,  t_var& sgh4,   t_var& sh2,   t_var& sh3,
+	t_var& si2,   t_var& si3,   t_var& sl2,    t_var& sl3,   t_var& sl4,
+	t_var& s1,    t_var& s2,    t_var& s3,     t_var& s4,    t_var& s5,
+	t_var& s6,    t_var& s7,    t_var& ss1,    t_var& ss2,   t_var& ss3,
+	t_var& ss4,   t_var& ss5,   t_var& ss6,    t_var& ss7,   t_var& sz1,
+	t_var& sz2,   t_var& sz3,   t_var& sz11,   t_var& sz12,  t_var& sz13,
+	t_var& sz21,  t_var& sz22,  t_var& sz23,   t_var& sz31,  t_var& sz32,
+	t_var& sz33,  t_var& xgh2,  t_var& xgh3,   t_var& xgh4,  t_var& xh2,
+	t_var& xh3,   t_var& xi2,   t_var& xi3,    t_var& xl2,   t_var& xl3,
+	t_var& xl4,   t_var& nm,    t_var& z1,     t_var& z2,    t_var& z3,
+	t_var& z11,   t_var& z12,   t_var& z13,    t_var& z21,   t_var& z22,
+	t_var& z23,   t_var& z31,   t_var& z32,    t_var& z33,   t_var& zmol,
+	t_var& zmos
 	);
 
 __device__ static void dpper
 	(
-	double e3,     double ee2,    double peo,     double pgho,   double pho,
-	double pinco,  double plo,    double se2,     double se3,    double sgh2,
-	double sgh3,   double sgh4,   double sh2,     double sh3,    double si2,
-	double si3,    double sl2,    double sl3,     double sl4,    double t,
-	double xgh2,   double xgh3,   double xgh4,    double xh2,    double xh3,
-	double xi2,    double xi3,    double xl2,     double xl3,    double xl4,
-	double zmol,   double zmos,   double inclo,
+	t_var e3,     t_var ee2,    t_var peo,     t_var pgho,   t_var pho,
+	t_var pinco,  t_var plo,    t_var se2,     t_var se3,    t_var sgh2,
+	t_var sgh3,   t_var sgh4,   t_var sh2,     t_var sh3,    t_var si2,
+	t_var si3,    t_var sl2,    t_var sl3,     t_var sl4,    t_var t,
+	t_var xgh2,   t_var xgh3,   t_var xgh4,    t_var xh2,    t_var xh3,
+	t_var xi2,    t_var xi3,    t_var xl2,     t_var xl3,    t_var xl4,
+	t_var zmol,   t_var zmos,   t_var inclo,
 	char init,
-	double& ep,    double& inclp, double& nodep,  double& argpp, double& mp
+	t_var& ep,    t_var& inclp, t_var& nodep,  t_var& argpp, t_var& mp
 	);
 __device__ static void dsinit
 	(
-	double cosim,  double emsq,   double argpo,   double s1,     double s2,
-	double s3,     double s4,     double s5,      double sinim,  double ss1,
-	double ss2,    double ss3,    double ss4,     double ss5,    double sz1,
-	double sz3,    double sz11,   double sz13,    double sz21,   double sz23,
-	double sz31,   double sz33,   double t,       double tc,     double gsto,
-	double mo,     double mdot,   double no,      double nodeo,  double nodedot,
-	double xpidot, double z1,     double z3,      double z11,    double z13,
-	double z21,    double z23,    double z31,     double z33,    double ecco,
-	double eccsq,  double& em,    double& argpm,  double& inclm, double& mm,
-	double& nm,    double& nodem,
+	t_var cosim,  t_var emsq,   t_var argpo,   t_var s1,     t_var s2,
+	t_var s3,     t_var s4,     t_var s5,      t_var sinim,  t_var ss1,
+	t_var ss2,    t_var ss3,    t_var ss4,     t_var ss5,    t_var sz1,
+	t_var sz3,    t_var sz11,   t_var sz13,    t_var sz21,   t_var sz23,
+	t_var sz31,   t_var sz33,   t_var t,       t_var tc,     t_var gsto,
+	t_var mo,     t_var mdot,   t_var no,      t_var nodeo,  t_var nodedot,
+	t_var xpidot, t_var z1,     t_var z3,      t_var z11,    t_var z13,
+	t_var z21,    t_var z23,    t_var z31,     t_var z33,    t_var ecco,
+	t_var eccsq,  t_var& em,    t_var& argpm,  t_var& inclm, t_var& mm,
+	t_var& nm,    t_var& nodem,
 	int& irez,
-	double& atime, double& d2201, double& d2211,  double& d3210, double& d3222,
-	double& d4410, double& d4422, double& d5220,  double& d5232, double& d5421,
-	double& d5433, double& dedt,  double& didt,   double& dmdt,  double& dndt,
-	double& dnodt, double& domdt, double& del1,   double& del2,  double& del3,
-	double& xfact, double& xlamo, double& xli,    double& xni
+	t_var& atime, t_var& d2201, t_var& d2211,  t_var& d3210, t_var& d3222,
+	t_var& d4410, t_var& d4422, t_var& d5220,  t_var& d5232, t_var& d5421,
+	t_var& d5433, t_var& dedt,  t_var& didt,   t_var& dmdt,  t_var& dndt,
+	t_var& dnodt, t_var& domdt, t_var& del1,   t_var& del2,  t_var& del3,
+	t_var& xfact, t_var& xlamo, t_var& xli,    t_var& xni
 	);
 
 __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
@@ -72,7 +72,7 @@ __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
 	int tid = block_start_idx + threadIdx.x;
 	if(tid < N){
 		/* --------------------- local variables ------------------------ */
-		double ao, /*ainv,*/   con42, cosio, sinio, cosio2, eccsq,
+		t_var ao, /*ainv,*/   con42, cosio, sinio, cosio2, eccsq,
 			omeosq, posq,   rp,     rteosq,
 			cnodm , snodm , cosim , sinim , cosomm, sinomm, cc1sq ,
 			cc2   , cc3   , coef  , coef1 , cosio4, day   , dndt  ,
@@ -90,7 +90,7 @@ __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
 
 		/* ------------------------ initialization --------------------- */
 		// sgp4fix divisor for divide by zero check on inclination
-		const double temp4    =   1.0 + cos(CUDART_PI-1.0e-9);
+		const t_var temp4    =   1.0 + cos((t_var)(CUDART_PI-1.0e-9));
 		/* ----------- set all near earth variables to zero ------------ */
 		satrec[tid].isimp   = 0;   satrec[tid].method = 'n'; satrec[tid].aycof    = 0.0;
 		satrec[tid].con41   = 0.0; satrec[tid].cc1    = 0.0; satrec[tid].cc4      = 0.0;
@@ -152,21 +152,21 @@ __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
 		//	ainv, ao, satrec->con41[tid], con42, cosio, cosio2, eccsq, omeosq,
 		//	posq, rp, rteosq, sinio, satrec->gsto[tid]
 		//	);
-		eccsq = pow(satrec[tid].ecco, 2.0);
+		eccsq = pow(satrec[tid].ecco, (t_var)2.0);
 		omeosq = 1.0 - eccsq;
 		rteosq = sqrt(omeosq);
 		cosio  = cos(satrec[tid].inclo);
 		cosio2 = cosio * cosio;
-		double ak    = pow(gravity_constants.xke / satrec[tid].no, 2.0/3.0);
-		double d1    = 0.75 * gravity_constants.j2 * (3.0 * cosio2 - 1.0) / (rteosq * omeosq);
-		double del   = d1 / pow(gravity_constants.xke / satrec[tid].no, 4.0/3.0);
-		double adel  = ak * (1.0 - del * del - del * (1.0 / 3.0 + 134.0 * del * del / 81.0));
+		t_var ak    = pow(gravity_constants.xke / satrec[tid].no, (t_var)(2.0/3.0));
+		t_var d1    = 0.75 * gravity_constants.j2 * (3.0 * cosio2 - 1.0) / (rteosq * omeosq);
+		t_var del   = d1 / pow(gravity_constants.xke / satrec[tid].no, (t_var)(4.0/3.0));
+		t_var adel  = ak * (1.0 - del * del - del * (1.0 / 3.0 + 134.0 * del * del / 81.0));
 		del   = d1/(adel * adel);
 		satrec[tid].no    = satrec[tid].no / (1.0 + del);
 
 		ao    = pow(gravity_constants.xke / satrec[tid].no, x2o3);
 		sinio = sin(satrec[tid].inclo);
-		double po    = ao * omeosq;
+		t_var po    = ao * omeosq;
 		con42 = 1.0 - 5.0 * cosio2;
 		satrec[tid].con41 = -con42-cosio2-cosio2;
 		//ainv  = 1.0 / ao;
@@ -208,8 +208,8 @@ __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
 			etasq = satrec[tid].eta * satrec[tid].eta;
 			eeta  = satrec[tid].ecco * satrec[tid].eta;
 			psisq = fabs(1.0 - etasq);
-			coef  = qzms24 * pow(tsi, 4.0);
-			coef1 = coef / pow(psisq, 3.5);
+			coef  = qzms24 * pow(tsi, (t_var)4.0);
+			coef1 = coef / pow(psisq, (t_var)3.5);
 			cc2   = coef1 * satrec[tid].no * (ao * (1.0 + 1.5 * etasq + eeta *
 				(4.0 + etasq)) + 0.375 * gravity_constants.j2 * tsi / psisq * satrec[tid].con41 *
 				(8.0 + 3.0 * etasq * (8.0 + etasq)));
@@ -454,41 +454,41 @@ __global__ void sgp4initkernel(satelliterecord_soa_t *satrec, int N)
 
 __device__ static void dscom
 	(
-	double epoch,  double ep,     double argpp,   double tc,     double inclp,
-	double nodep,  double np,
-	double& snodm, double& cnodm, double& sinim,  double& cosim, double& sinomm,
-	double& cosomm,double& day,   double& e3,     double& ee2,   double& em,
-	double& emsq,  double& gam,   double& peo,    double& pgho,  double& pho,
-	double& pinco, double& plo,   double& rtemsq, double& se2,   double& se3,
-	double& sgh2,  double& sgh3,  double& sgh4,   double& sh2,   double& sh3,
-	double& si2,   double& si3,   double& sl2,    double& sl3,   double& sl4,
-	double& s1,    double& s2,    double& s3,     double& s4,    double& s5,
-	double& s6,    double& s7,    double& ss1,    double& ss2,   double& ss3,
-	double& ss4,   double& ss5,   double& ss6,    double& ss7,   double& sz1,
-	double& sz2,   double& sz3,   double& sz11,   double& sz12,  double& sz13,
-	double& sz21,  double& sz22,  double& sz23,   double& sz31,  double& sz32,
-	double& sz33,  double& xgh2,  double& xgh3,   double& xgh4,  double& xh2,
-	double& xh3,   double& xi2,   double& xi3,    double& xl2,   double& xl3,
-	double& xl4,   double& nm,    double& z1,     double& z2,    double& z3,
-	double& z11,   double& z12,   double& z13,    double& z21,   double& z22,
-	double& z23,   double& z31,   double& z32,    double& z33,   double& zmol,
-	double& zmos
+	t_var epoch,  t_var ep,     t_var argpp,   t_var tc,     t_var inclp,
+	t_var nodep,  t_var np,
+	t_var& snodm, t_var& cnodm, t_var& sinim,  t_var& cosim, t_var& sinomm,
+	t_var& cosomm,t_var& day,   t_var& e3,     t_var& ee2,   t_var& em,
+	t_var& emsq,  t_var& gam,   t_var& peo,    t_var& pgho,  t_var& pho,
+	t_var& pinco, t_var& plo,   t_var& rtemsq, t_var& se2,   t_var& se3,
+	t_var& sgh2,  t_var& sgh3,  t_var& sgh4,   t_var& sh2,   t_var& sh3,
+	t_var& si2,   t_var& si3,   t_var& sl2,    t_var& sl3,   t_var& sl4,
+	t_var& s1,    t_var& s2,    t_var& s3,     t_var& s4,    t_var& s5,
+	t_var& s6,    t_var& s7,    t_var& ss1,    t_var& ss2,   t_var& ss3,
+	t_var& ss4,   t_var& ss5,   t_var& ss6,    t_var& ss7,   t_var& sz1,
+	t_var& sz2,   t_var& sz3,   t_var& sz11,   t_var& sz12,  t_var& sz13,
+	t_var& sz21,  t_var& sz22,  t_var& sz23,   t_var& sz31,  t_var& sz32,
+	t_var& sz33,  t_var& xgh2,  t_var& xgh3,   t_var& xgh4,  t_var& xh2,
+	t_var& xh3,   t_var& xi2,   t_var& xi3,    t_var& xl2,   t_var& xl3,
+	t_var& xl4,   t_var& nm,    t_var& z1,     t_var& z2,    t_var& z3,
+	t_var& z11,   t_var& z12,   t_var& z13,    t_var& z21,   t_var& z22,
+	t_var& z23,   t_var& z31,   t_var& z32,    t_var& z33,   t_var& zmol,
+	t_var& zmos
 	)
 {
 	/* -------------------------- constants ------------------------- */
-	const double zes     =  0.01675;
-	const double zel     =  0.05490;
-	const double c1ss    =  2.9864797e-6;
-	const double c1l     =  4.7968065e-7;
-	const double zsinis  =  0.39785416;
-	const double zcosis  =  0.91744867;
-	const double zcosgs  =  0.1945905;
-	const double zsings  = -0.98088458;
-	const double twopi   =  2.0 * CUDART_PI;
+	const t_var zes     =  0.01675;
+	const t_var zel     =  0.05490;
+	const t_var c1ss    =  2.9864797e-6;
+	const t_var c1l     =  4.7968065e-7;
+	const t_var zsinis  =  0.39785416;
+	const t_var zcosis  =  0.91744867;
+	const t_var zcosgs  =  0.1945905;
+	const t_var zsings  = -0.98088458;
+	const t_var twopi   =  2.0 * CUDART_PI;
 
 	/* --------------------- local variables ------------------------ */
 	int lsflg;
-	double a1    , a2    , a3    , a4    , a5    , a6    , a7    ,
+	t_var a1    , a2    , a3    , a4    , a5    , a6    , a7    ,
 		a8    , a9    , a10   , betasq, cc    , ctem  , stem  ,
 		x1    , x2    , x3    , x4    , x5    , x6    , x7    ,
 		x8    , xnodce, xnoi  , zcosg , zcosgl, zcosh , zcoshl,
@@ -514,7 +514,7 @@ __device__ static void dscom
 	pgho   = 0.0;
 	pho    = 0.0;
 	day    = epoch + 18261.5 + tc / 1440.0;
-	xnodce = fmod(4.5236020 - 9.2422029e-4 * day, twopi);
+	xnodce = fmod((t_var)(4.5236020 - 9.2422029e-4 * day), twopi);
 	stem   = sin(xnodce);
 	ctem   = cos(xnodce);
 	zcosil = 0.91375164 - 0.03568096 * ctem;
@@ -618,8 +618,8 @@ __device__ static void dscom
 		}
 	}
 
-	zmol = fmod(4.7199672 + 0.22997150  * day - gam, twopi);
-	zmos = fmod(6.2565837 + 0.017201977 * day, twopi);
+	zmol = fmod((t_var)(4.7199672 + 0.22997150  * day - gam), twopi);
+	zmos = fmod((t_var)(6.2565837 + 0.017201977 * day), twopi);
 
 	/* ------------------------ do solar terms ---------------------- */
 	se2  =   2.0 * ss1 * ss6;
@@ -652,76 +652,6 @@ __device__ static void dscom
 	//#include "debug2.cpp"
 }  // end dscom
 
-//static void initl
-//	(
-//	int satn,      gravconsttype whichconst,
-//	double ecco,   double epoch,  double inclo,   double& no,
-//	char& method,
-//	double& ainv,  double& ao,    double& con41,  double& con42, double& cosio,
-//	double& cosio2,double& eccsq, double& omeosq, double& posq,
-//	double& rp,    double& rteosq,double& sinio , double& gsto
-//	)
-//{
-//	/* --------------------- local variables ------------------------ */
-//	double ak, d1, del, adel, po, x2o3, j2, xke,
-//		tumin, mu, radiusearthkm, j3, j4, j3oj2;
-//
-//	// sgp4fix use old way of finding gst
-//	int ids70;
-//	double ts70, ds70, tfrac, c1, thgr70, fk5r, c1p2p, thgr, thgro;
-//	const double twopi = 2.0 * PI;
-//
-//	/* ----------------------- earth constants ---------------------- */
-//	// sgp4fix identify constants and allow alternate values
-//	//getgravconst( whichconst, tumin, mu, radiusearthkm, xke, j2, j3, j4, j3oj2 );
-//	x2o3   = 2.0 / 3.0;
-//
-//	/* ------------- calculate auxillary epoch quantities ---------- */
-//	eccsq  = ecco * ecco;
-//	omeosq = 1.0 - eccsq;
-//	rteosq = sqrt(omeosq);
-//	cosio  = cos(inclo);
-//	cosio2 = cosio * cosio;
-//
-//	/* ------------------ un-kozai the mean motion ----------------- */
-//	ak    = pow(gravity_constants.xke / no, x2o3);
-//	d1    = 0.75 * gravity_constants.j2 * (3.0 * cosio2 - 1.0) / (rteosq * omeosq);
-//	del   = d1 / (ak * ak);
-//	adel  = ak * (1.0 - del * del - del *
-//		(1.0 / 3.0 + 134.0 * del * del / 81.0));
-//	del   = d1/(adel * adel);
-//	no    = no / (1.0 + del);
-//
-//	ao    = pow(xke / no, x2o3);
-//	sinio = sin(inclo);
-//	po    = ao * omeosq;
-//	con42 = 1.0 - 5.0 * cosio2;
-//	con41 = -con42-cosio2-cosio2;
-//	ainv  = 1.0 / ao;
-//	posq  = po * po;
-//	rp    = ao * (1.0 - ecco);
-//	method = 'n';
-//
-//	// sgp4fix modern approach to finding sidereal timew
-//	// gsto = gstime(epoch + 2433281.5);
-//
-//	//// sgp4fix use old way of finding gst
-//	//// count integer number of days from 0 jan 1970
-//	//ts70  = epoch - 7305.0;
-//	//ids70 = floor(ts70 + 1.0e-8);
-//	//ds70  = ids70;
-//	//tfrac = ts70 - ds70;
-//	//// find greenwich location at epoch
-//	//c1    = 1.72027916940703639e-2;
-//	//thgr70= 1.7321343856509374;
-//	//fk5r  = 5.07551419432269442e-15;
-//	//c1p2p = c1 + twopi;
-//	//gsto  = fmod( thgr70 + c1*ds70 + c1p2p*tfrac + ts70*ts70*fk5r, twopi);
-//	//if ( gsto < 0.0 )
-//	//	gsto = gsto + twopi;
-//
-//	//#include "debug5.cpp"
-//}  // end initl
 
 
 
@@ -795,20 +725,20 @@ __device__ static void dscom
 
 __device__ static void dpper
 	(
-	double e3,     double ee2,    double peo,     double pgho,   double pho,
-	double pinco,  double plo,    double se2,     double se3,    double sgh2,
-	double sgh3,   double sgh4,   double sh2,     double sh3,    double si2,
-	double si3,    double sl2,    double sl3,     double sl4,    double t,
-	double xgh2,   double xgh3,   double xgh4,    double xh2,    double xh3,
-	double xi2,    double xi3,    double xl2,     double xl3,    double xl4,
-	double zmol,   double zmos,   double inclo,
+	t_var e3,     t_var ee2,    t_var peo,     t_var pgho,   t_var pho,
+	t_var pinco,  t_var plo,    t_var se2,     t_var se3,    t_var sgh2,
+	t_var sgh3,   t_var sgh4,   t_var sh2,     t_var sh3,    t_var si2,
+	t_var si3,    t_var sl2,    t_var sl3,     t_var sl4,    t_var t,
+	t_var xgh2,   t_var xgh3,   t_var xgh4,    t_var xh2,    t_var xh3,
+	t_var xi2,    t_var xi3,    t_var xl2,     t_var xl3,    t_var xl4,
+	t_var zmol,   t_var zmos,   t_var inclo,
 	char init,
-	double& ep,    double& inclp, double& nodep,  double& argpp, double& mp
+	t_var& ep,    t_var& inclp, t_var& nodep,  t_var& argpp, t_var& mp
 	)
 {
 	/* --------------------- local variables ------------------------ */
-	const double twopi = 2.0 * CUDART_PI;
-	double alfdp, betdp, cosip, cosop, dalf, dbet, dls,
+	const t_var twopi = 2.0 * CUDART_PI;
+	t_var alfdp, betdp, cosip, cosop, dalf, dbet, dls,
 		f2,    f3,    pe,    pgh,   ph,   pinc, pl ,
 		sel,   ses,   sghl,  sghs,  shll, shs,  sil,
 		sinip, sinop, sinzf, sis,   sll,  sls,  xls,
@@ -1002,28 +932,28 @@ __device__ static void dpper
 
 __device__ static void dsinit
 	(
-	double cosim,  double emsq,   double argpo,   double s1,     double s2,
-	double s3,     double s4,     double s5,      double sinim,  double ss1,
-	double ss2,    double ss3,    double ss4,     double ss5,    double sz1,
-	double sz3,    double sz11,   double sz13,    double sz21,   double sz23,
-	double sz31,   double sz33,   double t,       double tc,     double gsto,
-	double mo,     double mdot,   double no,      double nodeo,  double nodedot,
-	double xpidot, double z1,     double z3,      double z11,    double z13,
-	double z21,    double z23,    double z31,     double z33,    double ecco,
-	double eccsq,  double& em,    double& argpm,  double& inclm, double& mm,
-	double& nm,    double& nodem,
+	t_var cosim,  t_var emsq,   t_var argpo,   t_var s1,     t_var s2,
+	t_var s3,     t_var s4,     t_var s5,      t_var sinim,  t_var ss1,
+	t_var ss2,    t_var ss3,    t_var ss4,     t_var ss5,    t_var sz1,
+	t_var sz3,    t_var sz11,   t_var sz13,    t_var sz21,   t_var sz23,
+	t_var sz31,   t_var sz33,   t_var t,       t_var tc,     t_var gsto,
+	t_var mo,     t_var mdot,   t_var no,      t_var nodeo,  t_var nodedot,
+	t_var xpidot, t_var z1,     t_var z3,      t_var z11,    t_var z13,
+	t_var z21,    t_var z23,    t_var z31,     t_var z33,    t_var ecco,
+	t_var eccsq,  t_var& em,    t_var& argpm,  t_var& inclm, t_var& mm,
+	t_var& nm,    t_var& nodem,
 	int& irez,
-	double& atime, double& d2201, double& d2211,  double& d3210, double& d3222,
-	double& d4410, double& d4422, double& d5220,  double& d5232, double& d5421,
-	double& d5433, double& dedt,  double& didt,   double& dmdt,  double& dndt,
-	double& dnodt, double& domdt, double& del1,   double& del2,  double& del3,
-	double& xfact, double& xlamo, double& xli,    double& xni
+	t_var& atime, t_var& d2201, t_var& d2211,  t_var& d3210, t_var& d3222,
+	t_var& d4410, t_var& d4422, t_var& d5220,  t_var& d5232, t_var& d5421,
+	t_var& d5433, t_var& dedt,  t_var& didt,   t_var& dmdt,  t_var& dndt,
+	t_var& dnodt, t_var& domdt, t_var& del1,   t_var& del2,  t_var& del3,
+	t_var& xfact, t_var& xlamo, t_var& xli,    t_var& xni
 	)
 {
 	/* --------------------- local variables ------------------------ */
-	const double twopi = 2.0 * CUDART_PI;
+	const t_var twopi = 2.0 * CUDART_PI;
 
-	double ainv2 , aonv=0.0, cosisq, eoc, f220 , f221  , f311  ,
+	t_var ainv2 , aonv=0.0, cosisq, eoc, f220 , f221  , f311  ,
 		f321  , f322  , f330  , f441  , f442  , f522  , f523  ,
 		f542  , f543  , g200  , g201  , g211  , g300  , g310  ,
 		g322  , g410  , g422  , g520  , g521  , g532  , g533  ,

@@ -11,7 +11,7 @@ void initSGP4(	gravconsttype whichconst,
 				int numberSatellites	);
 
 void ComputeSGP4(	float4 *positions,
-					double deltatime,
+					t_var deltatime,
 					int numberSatellites	);
 
 
@@ -19,71 +19,71 @@ void ComputeSGP4(	float4 *positions,
 static void dspace
 (
 int irez,
-double d2201,  double d2211,  double d3210,   double d3222,  double d4410,
-double d4422,  double d5220,  double d5232,   double d5421,  double d5433,
-double dedt,   double del1,   double del2,    double del3,   double didt,
-double dmdt,   double dnodt,  double domdt,   double argpo,  double argpdot,
-double t,      double tc,     double gsto,    double xfact,  double xlamo,
-double no,
-double& atime, double& em,    double& argpm,  double& inclm, double& xli,
-double& mm,    double& xni,   double& nodem,  double& dndt,  double& nm
+t_var d2201,  t_var d2211,  t_var d3210,   t_var d3222,  t_var d4410,
+t_var d4422,  t_var d5220,  t_var d5232,   t_var d5421,  t_var d5433,
+t_var dedt,   t_var del1,   t_var del2,    t_var del3,   t_var didt,
+t_var dmdt,   t_var dnodt,  t_var domdt,   t_var argpo,  t_var argpdot,
+t_var t,      t_var tc,     t_var gsto,    t_var xfact,  t_var xlamo,
+t_var no,
+t_var& atime, t_var& em,    t_var& argpm,  t_var& inclm, t_var& xli,
+t_var& mm,    t_var& xni,   t_var& nodem,  t_var& dndt,  t_var& nm
 );
 
 
 static void dscom
 (
-double epoch,  double ep,     double argpp,   double tc,     double inclp,
-double nodep,  double np,
-double& snodm, double& cnodm, double& sinim,  double& cosim, double& sinomm,
-double& cosomm,double& day,   double& e3,     double& ee2,   double& em,
-double& emsq,  double& gam,   double& peo,    double& pgho,  double& pho,
-double& pinco, double& plo,   double& rtemsq, double& se2,   double& se3,
-double& sgh2,  double& sgh3,  double& sgh4,   double& sh2,   double& sh3,
-double& si2,   double& si3,   double& sl2,    double& sl3,   double& sl4,
-double& s1,    double& s2,    double& s3,     double& s4,    double& s5,
-double& s6,    double& s7,    double& ss1,    double& ss2,   double& ss3,
-double& ss4,   double& ss5,   double& ss6,    double& ss7,   double& sz1,
-double& sz2,   double& sz3,   double& sz11,   double& sz12,  double& sz13,
-double& sz21,  double& sz22,  double& sz23,   double& sz31,  double& sz32,
-double& sz33,  double& xgh2,  double& xgh3,   double& xgh4,  double& xh2,
-double& xh3,   double& xi2,   double& xi3,    double& xl2,   double& xl3,
-double& xl4,   double& nm,    double& z1,     double& z2,    double& z3,
-double& z11,   double& z12,   double& z13,    double& z21,   double& z22,
-double& z23,   double& z31,   double& z32,    double& z33,   double& zmol,
-double& zmos
+t_var epoch,  t_var ep,     t_var argpp,   t_var tc,     t_var inclp,
+t_var nodep,  t_var np,
+t_var& snodm, t_var& cnodm, t_var& sinim,  t_var& cosim, t_var& sinomm,
+t_var& cosomm,t_var& day,   t_var& e3,     t_var& ee2,   t_var& em,
+t_var& emsq,  t_var& gam,   t_var& peo,    t_var& pgho,  t_var& pho,
+t_var& pinco, t_var& plo,   t_var& rtemsq, t_var& se2,   t_var& se3,
+t_var& sgh2,  t_var& sgh3,  t_var& sgh4,   t_var& sh2,   t_var& sh3,
+t_var& si2,   t_var& si3,   t_var& sl2,    t_var& sl3,   t_var& sl4,
+t_var& s1,    t_var& s2,    t_var& s3,     t_var& s4,    t_var& s5,
+t_var& s6,    t_var& s7,    t_var& ss1,    t_var& ss2,   t_var& ss3,
+t_var& ss4,   t_var& ss5,   t_var& ss6,    t_var& ss7,   t_var& sz1,
+t_var& sz2,   t_var& sz3,   t_var& sz11,   t_var& sz12,  t_var& sz13,
+t_var& sz21,  t_var& sz22,  t_var& sz23,   t_var& sz31,  t_var& sz32,
+t_var& sz33,  t_var& xgh2,  t_var& xgh3,   t_var& xgh4,  t_var& xh2,
+t_var& xh3,   t_var& xi2,   t_var& xi3,    t_var& xl2,   t_var& xl3,
+t_var& xl4,   t_var& nm,    t_var& z1,     t_var& z2,    t_var& z3,
+t_var& z11,   t_var& z12,   t_var& z13,    t_var& z21,   t_var& z22,
+t_var& z23,   t_var& z31,   t_var& z32,    t_var& z33,   t_var& zmol,
+t_var& zmos
 );
 
 static void dpper
 (
-double e3,     double ee2,    double peo,     double pgho,   double pho,
-double pinco,  double plo,    double se2,     double se3,    double sgh2,
-double sgh3,   double sgh4,   double sh2,     double sh3,    double si2,
-double si3,    double sl2,    double sl3,     double sl4,    double t,
-double xgh2,   double xgh3,   double xgh4,    double xh2,    double xh3,
-double xi2,    double xi3,    double xl2,     double xl3,    double xl4,
-double zmol,   double zmos,   double inclo,
+t_var e3,     t_var ee2,    t_var peo,     t_var pgho,   t_var pho,
+t_var pinco,  t_var plo,    t_var se2,     t_var se3,    t_var sgh2,
+t_var sgh3,   t_var sgh4,   t_var sh2,     t_var sh3,    t_var si2,
+t_var si3,    t_var sl2,    t_var sl3,     t_var sl4,    t_var t,
+t_var xgh2,   t_var xgh3,   t_var xgh4,    t_var xh2,    t_var xh3,
+t_var xi2,    t_var xi3,    t_var xl2,     t_var xl3,    t_var xl4,
+t_var zmol,   t_var zmos,   t_var inclo,
 char init,
-double& ep,    double& inclp, double& nodep,  double& argpp, double& mp
+t_var& ep,    t_var& inclp, t_var& nodep,  t_var& argpp, t_var& mp
 );
 static void dsinit
 (
 gravconstant_t gravity_constants,
-double cosim,  double emsq,   double argpo,   double s1,     double s2,
-double s3,     double s4,     double s5,      double sinim,  double ss1,
-double ss2,    double ss3,    double ss4,     double ss5,    double sz1,
-double sz3,    double sz11,   double sz13,    double sz21,   double sz23,
-double sz31,   double sz33,   double t,       double tc,     double gsto,
-double mo,     double mdot,   double no,      double nodeo,  double nodedot,
-double xpidot, double z1,     double z3,      double z11,    double z13,
-double z21,    double z23,    double z31,     double z33,    double ecco,
-double eccsq,  double& em,    double& argpm,  double& inclm, double& mm,
-double& nm,    double& nodem,
+t_var cosim,  t_var emsq,   t_var argpo,   t_var s1,     t_var s2,
+t_var s3,     t_var s4,     t_var s5,      t_var sinim,  t_var ss1,
+t_var ss2,    t_var ss3,    t_var ss4,     t_var ss5,    t_var sz1,
+t_var sz3,    t_var sz11,   t_var sz13,    t_var sz21,   t_var sz23,
+t_var sz31,   t_var sz33,   t_var t,       t_var tc,     t_var gsto,
+t_var mo,     t_var mdot,   t_var no,      t_var nodeo,  t_var nodedot,
+t_var xpidot, t_var z1,     t_var z3,      t_var z11,    t_var z13,
+t_var z21,    t_var z23,    t_var z31,     t_var z33,    t_var ecco,
+t_var eccsq,  t_var& em,    t_var& argpm,  t_var& inclm, t_var& mm,
+t_var& nm,    t_var& nodem,
 int& irez,
-double& atime, double& d2201, double& d2211,  double& d3210, double& d3222,
-double& d4410, double& d4422, double& d5220,  double& d5232, double& d5421,
-double& d5433, double& dedt,  double& didt,   double& dmdt,  double& dndt,
-double& dnodt, double& domdt, double& del1,   double& del2,  double& del3,
-double& xfact, double& xlamo, double& xli,    double& xni
+t_var& atime, t_var& d2201, t_var& d2211,  t_var& d3210, t_var& d3222,
+t_var& d4410, t_var& d4422, t_var& d5220,  t_var& d5232, t_var& d5421,
+t_var& d5433, t_var& dedt,  t_var& didt,   t_var& dmdt,  t_var& dndt,
+t_var& dnodt, t_var& domdt, t_var& del1,   t_var& del2,  t_var& del3,
+t_var& xfact, t_var& xlamo, t_var& xli,    t_var& xni
 );
 
 void sgp4initkernel(gravconstant_t gravity_constants, satelliterecord_soa_t *satrec, int tid);

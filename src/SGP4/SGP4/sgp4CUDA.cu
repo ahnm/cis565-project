@@ -6,7 +6,7 @@
 #include "sgp4Kernel.cu"
 
 
-double currenttime = 0.0;
+t_var currenttime = 0.0;
 
 struct satelliterecord_soa_t *d_satrec, *h_satrec;
 
@@ -32,7 +32,7 @@ void initSGP4CUDA( 	gravconsttype whichconst, std::vector<satelliterecord_aos_t>
 
 }
 
-void ComputeSGP4CUDA(	float4 *positions, double deltatime, int numberSatellites	){	
+void ComputeSGP4CUDA(	float4 *positions, t_var deltatime, int numberSatellites	){	
 	currenttime += deltatime;
 	
 	dim3 threadsperblock( NUM_THREADS , 1 );

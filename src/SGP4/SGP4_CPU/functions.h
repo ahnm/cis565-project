@@ -31,10 +31,10 @@ T StringExpToNumber ( const std::string &Text )
 	return result;
 };
 
-void days2mdhms( int year, double days,	int& mon, int& day, int& hr, int& minute, double& sec );
+void days2mdhms( int year, t_var days,	int& mon, int& day, int& hr, int& minute, t_var& sec );
 
-void jday(int year, int mon, int day, int hr, int minute, double sec, double& jd);
+void jday(int year, int mon, int day, int hr, int minute, t_var sec, t_var& jd);
 
-double gstime( double jdut1 );
+t_var gstime( t_var jdut1 );
 
 #endif

@@ -38,10 +38,10 @@
 *    none.
 * --------------------------------------------------------------------------- */
 
-void days2mdhms( int year, double days,	int& mon, int& day, int& hr, int& minute, double& sec )
+void days2mdhms( int year, t_var days,	int& mon, int& day, int& hr, int& minute, t_var& sec )
 {
 	int i, inttemp, dayofyr;
-	double    temp;
+	t_var    temp;
 	int lmonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 	dayofyr = (int)floor(days);
@@ -99,7 +99,7 @@ void days2mdhms( int year, double days,	int& mon, int& day, int& hr, int& minute
 *    vallado       2007, 189, alg 14, ex 3-14
 *
 * --------------------------------------------------------------------------- */
-void jday(int year, int mon, int day, int hr, int minute, double sec, double& jd)
+void jday(int year, int mon, int day, int hr, int minute, t_var sec, t_var& jd)
 {
 	jd = 367.0 * year -
 		floor((7 * (year + floor((mon + 9) / 12.0))) * 0.25) +
@@ -138,19 +138,19 @@ void jday(int year, int mon, int day, int hr, int minute, double sec, double& jd
 *    vallado       2004, 191, eq 3-45
 * --------------------------------------------------------------------------- */
 
-double  gstime
+t_var  gstime
 	(
-	double jdut1
+	t_var jdut1
 	)
 {
-	const double twopi = 2.0 * CUDART_PI;
-	const double deg2rad = CUDART_PI / 180.0;
-	double       temp, tut1;
+	const t_var twopi = 2.0 * CUDART_PI;
+	const t_var deg2rad = CUDART_PI / 180.0;
+	t_var       temp, tut1;
 
 	tut1 = (jdut1 - 2451545.0) / 36525.0;
 	temp = -6.2e-6* tut1 * tut1 * tut1 + 0.093104 * tut1 * tut1 +
 		(876600.0*3600 + 8640184.812866) * tut1 + 67310.54841;  // sec
-	temp = fmod(temp * deg2rad / 240.0, twopi); //360/86400 = 1/240, to deg, to rad
+	temp = fmod(temp * deg2rad / (t_var)240.0, twopi); //360/86400 = 1/240, to deg, to rad
 
 	// ------------------------ check quadrants ---------------------
 	if (temp < 0.0)
