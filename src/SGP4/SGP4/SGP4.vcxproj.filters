@@ -64,8 +64,17 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{4881e2a2-e8ff-46be-93a2-714bcbd7bed6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{f04ea6aa-ffbc-44c7-bef9-7c840ff3fe07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="NSightActivity.nvact" />
+    <None Include="globe.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="globe.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

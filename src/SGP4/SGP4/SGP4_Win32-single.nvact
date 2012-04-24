@@ -101,5 +101,5 @@
     <Property Name="ExperimentsPresetConfiguration" Value="All" />
     <Property Name="ExtensionsToSynchronize" Value="*.*;" />
     <Property Name="KernelsToProfile" Value="sgp4" />
-    <Property Name="WorkingDirectory" Value="D:\School\cis565\cis565-project\src\SGP4\SGP4" />
+    <Property Name="WorkingDirectory" Value="D:\School\cis565\cis565-project\bin\Win32\Debug-single" />
 </Model>

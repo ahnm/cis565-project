@@ -176,6 +176,9 @@ void display(void)
     glTranslatef(0.0, 0.0, translate_z);
     glRotatef(rotate_x, 1.0, 0.0, 0.0);
     glRotatef(rotate_y, 0.0, 1.0, 0.0);
+	
+    glColor3f(0.0, 0.0, 1.0);
+	glutWireSphere(1.0, 90.0, 90.0);
 
     // render from the vbo with newPos
     glBindBuffer(GL_ARRAY_BUFFER, vbo_pos[0]);
