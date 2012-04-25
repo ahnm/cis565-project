@@ -6,10 +6,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutil", "..\..\common\cutil_vs2010.vcxproj", "{46FB0B73-5A53-444A-8E72-F4F0A373098C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4", "SGP4\SGP4.vcxproj", "{E0AE61D3-E1A5-4268-BC51-6DB35155ACE0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{25544C77-3B78-405F-A15D-1231D05969F3} = {25544C77-3B78-405F-A15D-1231D05969F3}
-		{5669AD87-4229-4695-A81A-0775DB7BBB67} = {5669AD87-4229-4695-A81A-0775DB7BBB67}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGP4_CPU", "SGP4_CPU\SGP4_CPU.vcxproj", "{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}"
 EndProject
@@ -21,10 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SGP4\SGP4_x64-double.nvact = SGP4\SGP4_x64-double.nvact
 		SGP4\SGP4_x64-single.nvact = SGP4\SGP4_x64-single.nvact
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shader_Loading", "Shader_Loading\Shader_Loading.vcxproj", "{5669AD87-4229-4695-A81A-0775DB7BBB67}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SOIL", "SOIL\SOIL.vcxproj", "{25544C77-3B78-405F-A15D-1231D05969F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,30 +91,6 @@ Global
 		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|Win32.Build.0 = Release|Win32
 		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|x64.ActiveCfg = Release|x64
 		{C8C9B08F-30AB-4B2F-94C1-D2D1320ED711}.Release|x64.Build.0 = Release|x64
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug|Win32.Build.0 = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug|x64.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-double|Win32.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-double|Win32.Build.0 = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-double|x64.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-single|Win32.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-single|Win32.Build.0 = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Debug-single|x64.ActiveCfg = Debug|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Release|Win32.ActiveCfg = Release|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Release|Win32.Build.0 = Release|Win32
-		{5669AD87-4229-4695-A81A-0775DB7BBB67}.Release|x64.ActiveCfg = Release|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug|Win32.Build.0 = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug|x64.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-double|Win32.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-double|Win32.Build.0 = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-double|x64.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-single|Win32.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-single|Win32.Build.0 = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Debug-single|x64.ActiveCfg = Debug|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Release|Win32.ActiveCfg = Release|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Release|Win32.Build.0 = Release|Win32
-		{25544C77-3B78-405F-A15D-1231D05969F3}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
