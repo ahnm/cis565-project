@@ -199,7 +199,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;cudart.lib;glew32.lib;cutil32D.lib;shrUtils32D.lib;Shader_Loading.lib;SOIL.lib;kernel32.lib;LIBCMTD.LIB;LIBCPMTD.LIB</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;freeglut.lib;cudart.lib;glew32.lib;cutil32D.lib;shrUtils32D.lib;kernel32.lib;LIBCMTD.LIB;LIBCPMTD.LIB</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <AdditionalLibraryDirectories>../../../common/lib/$(Platform);../../../shared/lib/$(Platform);../SOIL/lib/$(Platform);../Shader_Loading/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -211,7 +211,7 @@
       <Include>./;../../../common/inc;../../../shared/inc;../Shader_Loading;../SOIL;%(Include)</Include>
       <CodeGeneration>compute_20,sm_20</CodeGeneration>
       <GPUDebugInfo>true</GPUDebugInfo>
-      <Optimization>O3</Optimization>
+      <Optimization>O1</Optimization>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-single|Win32'">
